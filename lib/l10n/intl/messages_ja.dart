@@ -1019,6 +1019,78 @@ class MessageLookup extends MessageLookupByLibrary {
     "systemProxy": MessageLookupByLibrary.simpleMessage("システムプロキシ"),
     "systemProxyDesc": MessageLookupByLibrary.simpleMessage("システムプロキシの設定"),
     "tab": MessageLookupByLibrary.simpleMessage("タブ"),
+    "tailscale": MessageLookupByLibrary.simpleMessage("Tailscale"),
+    "tailscaleAcceptRoutes": MessageLookupByLibrary.simpleMessage(
+      "サブネットルートを受け入れる",
+    ),
+    "tailscaleAcceptRoutesDesc": MessageLookupByLibrary.simpleMessage(
+      "tailnet で広告されたサブネットルートを使用",
+    ),
+    "tailscaleAddNetwork": MessageLookupByLibrary.simpleMessage("ネットワークを追加"),
+    "tailscaleAuthKey": MessageLookupByLibrary.simpleMessage("認証キー"),
+    "tailscaleAuthKeyDesc": MessageLookupByLibrary.simpleMessage(
+      "任意。未入力の場合は「ログイン」（SSO/OIDC）を使用",
+    ),
+    "tailscaleControlUrl": MessageLookupByLibrary.simpleMessage("コントロールサーバー"),
+    "tailscaleControlUrlDesc": MessageLookupByLibrary.simpleMessage(
+      "空欄で Tailscale を使用。Headscale の場合は URL を入力",
+    ),
+    "tailscaleDeleteNetwork": MessageLookupByLibrary.simpleMessage("ネットワークを削除"),
+    "tailscaleDesc": MessageLookupByLibrary.simpleMessage(
+      "指定したドメインと IP を tailnet 経由で接続",
+    ),
+    "tailscaleDns": MessageLookupByLibrary.simpleMessage("Tailnet DNS"),
+    "tailscaleDnsDesc": MessageLookupByLibrary.simpleMessage(
+      "tailnet 内の DNS サーバーで解決するドメイン（ドメイン=サーバー、例: corp.example.com=10.1.0.53）。解決先のサブネットはルーティングリストに追加してください",
+    ),
+    "tailscaleEnable": MessageLookupByLibrary.simpleMessage("Tailscale を有効化"),
+    "tailscaleEnableDesc": MessageLookupByLibrary.simpleMessage(
+      "内蔵の Tailscale ノードで tailnet に参加",
+    ),
+    "tailscaleExitNode": MessageLookupByLibrary.simpleMessage("出口ノード"),
+    "tailscaleExitNodeDesc": MessageLookupByLibrary.simpleMessage(
+      "tailnet 内のデバイス名か IP、または auto:any。公開サイトへの接続に必要",
+    ),
+    "tailscaleExitNodeLan": MessageLookupByLibrary.simpleMessage(
+      "LAN へのアクセスを許可",
+    ),
+    "tailscaleExitNodeLanDesc": MessageLookupByLibrary.simpleMessage(
+      "出口ノード使用中もローカルネットワークに接続可能",
+    ),
+    "tailscaleHostname": MessageLookupByLibrary.simpleMessage("デバイス名"),
+    "tailscaleInvalidDns": MessageLookupByLibrary.simpleMessage(
+      "ドメイン=サーバー の形式で、サーバーは IP または tls:// / https:// URL（例: corp.example.com=10.1.0.53）",
+    ),
+    "tailscaleInvalidEntry": MessageLookupByLibrary.simpleMessage(
+      "ドメイン、IP または CIDR を入力してください",
+    ),
+    "tailscaleLoggedIn": MessageLookupByLibrary.simpleMessage(
+      "Tailscale にログインしました",
+    ),
+    "tailscaleLogin": MessageLookupByLibrary.simpleMessage("ログイン"),
+    "tailscaleLoginDesc": MessageLookupByLibrary.simpleMessage(
+      "ブラウザで tailnet の SSO/OIDC によりログイン（認証キー不要）",
+    ),
+    "tailscaleLoginNeeded": MessageLookupByLibrary.simpleMessage(
+      "Tailscale のログインが必要です",
+    ),
+    "tailscaleNetwork": MessageLookupByLibrary.simpleMessage("ネットワーク"),
+    "tailscaleNetworks": MessageLookupByLibrary.simpleMessage("ネットワーク一覧"),
+    "tailscaleReset": MessageLookupByLibrary.simpleMessage("ノードをリセット"),
+    "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(
+      "このデバイスの tailnet ID を削除して新しいデバイスとして参加します。古いデバイスは管理コンソールで削除してください",
+    ),
+    "tailscaleRoutes": MessageLookupByLibrary.simpleMessage("ルーティングリスト"),
+    "tailscaleRoutesDesc": MessageLookupByLibrary.simpleMessage(
+      "ルールモードで Tailscale を経由するドメインと IP/CIDR。デスクトップのプライベートサブネットには TUN が必要",
+    ),
+    "tailscaleStarting": MessageLookupByLibrary.simpleMessage(
+      "Tailscale を起動中…",
+    ),
+    "tailscaleUdp": MessageLookupByLibrary.simpleMessage("UDP"),
+    "tailscaleUdpDesc": MessageLookupByLibrary.simpleMessage(
+      "UDP 通信を Tailscale 経由で送信",
+    ),
     "tcpConcurrent": MessageLookupByLibrary.simpleMessage("TCP並列接続"),
     "tcpConcurrentDesc": MessageLookupByLibrary.simpleMessage("TCPの同時並列接続を許可"),
     "testUrl": MessageLookupByLibrary.simpleMessage("テストURL"),

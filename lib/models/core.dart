@@ -15,6 +15,9 @@ abstract mixin class AppMessageListener {
   void onRequest(TrackerInfo connection) {}
 
   void onLoaded(String providerName) {}
+
+  /// Tailscale's SSO/OIDC login URL, or '' once login finished.
+  void onTailscaleAuth(String url) {}
 }
 
 // abstract mixin class ServiceMessageListener {
@@ -29,6 +32,13 @@ abstract class SetupParams with _$SetupParams {
     @JsonKey(name: 'selected-map') required Map<String, String> selectedMap,
     @JsonKey(name: 'test-url') required String testUrl,
     @JsonKey(name: 'override-test-url') @Default(true) bool overrideTestUrl,
+    @JsonKey(name: 'tailscale-proxy') String? tailscaleProxy,
+    @JsonKey(name: 'tailscale-dns-domains')
+    @Default([])
+    List<String> tailscaleDnsDomains,
+    @JsonKey(name: 'reset-tailscale-dirs')
+    @Default([])
+    List<String> resetTailscaleDirs,
   }) = _SetupParams;
 
   factory SetupParams.fromJson(Map<String, dynamic> json) =>

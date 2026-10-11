@@ -10,6 +10,17 @@ _SetupParams _$SetupParamsFromJson(Map<String, dynamic> json) => _SetupParams(
   selectedMap: Map<String, String>.from(json['selected-map'] as Map),
   testUrl: json['test-url'] as String,
   overrideTestUrl: json['override-test-url'] as bool? ?? true,
+  tailscaleProxy: json['tailscale-proxy'] as String?,
+  tailscaleDnsDomains:
+      (json['tailscale-dns-domains'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      const [],
+  resetTailscaleDirs:
+      (json['reset-tailscale-dirs'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      const [],
 );
 
 Map<String, dynamic> _$SetupParamsToJson(_SetupParams instance) =>
@@ -17,6 +28,9 @@ Map<String, dynamic> _$SetupParamsToJson(_SetupParams instance) =>
       'selected-map': instance.selectedMap,
       'test-url': instance.testUrl,
       'override-test-url': instance.overrideTestUrl,
+      'tailscale-proxy': instance.tailscaleProxy,
+      'tailscale-dns-domains': instance.tailscaleDnsDomains,
+      'reset-tailscale-dirs': instance.resetTailscaleDirs,
     };
 
 _UpdateParams _$UpdateParamsFromJson(Map<String, dynamic> json) =>
@@ -193,6 +207,7 @@ const _$AppMessageTypeEnumMap = {
   AppMessageType.delay: 'delay',
   AppMessageType.request: 'request',
   AppMessageType.loaded: 'loaded',
+  AppMessageType.tailscaleAuth: 'tailscaleAuth',
 };
 
 _InvokeMessage _$InvokeMessageFromJson(Map<String, dynamic> json) =>

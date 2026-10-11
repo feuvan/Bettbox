@@ -296,6 +296,22 @@ final patchClashConfigProvider =
     );
 
 typedef _$PatchClashConfig = AutoDisposeNotifier<ClashConfig>;
+String _$tailscaleSettingHash() => r'f457ab6348ebb497740bb1a0939fd64876449b79';
+
+/// See also [TailscaleSetting].
+@ProviderFor(TailscaleSetting)
+final tailscaleSettingProvider =
+    AutoDisposeNotifierProvider<TailscaleSetting, TailscaleProps>.internal(
+      TailscaleSetting.new,
+      name: r'tailscaleSettingProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$tailscaleSettingHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+typedef _$TailscaleSetting = AutoDisposeNotifier<TailscaleProps>;
 String _$nodeExcludeFilterHash() => r'5fc26cba4cd5c9dfdb57fcd4eb4bf59d39abafc3';
 
 /// See also [NodeExcludeFilter].

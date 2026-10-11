@@ -907,6 +907,72 @@ class MessageLookup extends MessageLookupByLibrary {
     "systemProxy": MessageLookupByLibrary.simpleMessage("系统代理"),
     "systemProxyDesc": MessageLookupByLibrary.simpleMessage("设置系统代理"),
     "tab": MessageLookupByLibrary.simpleMessage("标签页"),
+    "tailscale": MessageLookupByLibrary.simpleMessage("Tailscale"),
+    "tailscaleAcceptRoutes": MessageLookupByLibrary.simpleMessage("接受子网路由"),
+    "tailscaleAcceptRoutesDesc": MessageLookupByLibrary.simpleMessage(
+      "使用 tailnet 中发布的子网路由",
+    ),
+    "tailscaleAddNetwork": MessageLookupByLibrary.simpleMessage("添加网络"),
+    "tailscaleAuthKey": MessageLookupByLibrary.simpleMessage("认证密钥"),
+    "tailscaleAuthKeyDesc": MessageLookupByLibrary.simpleMessage(
+      "可选；不填写时请使用“登录”（SSO/OIDC）",
+    ),
+    "tailscaleControlUrl": MessageLookupByLibrary.simpleMessage("控制服务器"),
+    "tailscaleControlUrlDesc": MessageLookupByLibrary.simpleMessage(
+      "留空使用 Tailscale 官方服务器，Headscale 请填写其地址",
+    ),
+    "tailscaleDeleteNetwork": MessageLookupByLibrary.simpleMessage("删除网络"),
+    "tailscaleDesc": MessageLookupByLibrary.simpleMessage(
+      "让指定的域名和 IP 通过 Tailscale 网络访问",
+    ),
+    "tailscaleDns": MessageLookupByLibrary.simpleMessage("Tailnet DNS"),
+    "tailscaleDnsDesc": MessageLookupByLibrary.simpleMessage(
+      "由 tailnet 内 DNS 服务器解析的域名，格式为 域名=服务器（如 corp.example.com=10.1.0.53）。请将解析到的网段加入分流列表",
+    ),
+    "tailscaleEnable": MessageLookupByLibrary.simpleMessage("启用 Tailscale"),
+    "tailscaleEnableDesc": MessageLookupByLibrary.simpleMessage(
+      "使用内置 Tailscale 节点加入 tailnet",
+    ),
+    "tailscaleExitNode": MessageLookupByLibrary.simpleMessage("出口节点"),
+    "tailscaleExitNodeDesc": MessageLookupByLibrary.simpleMessage(
+      "tailnet 中的设备名称或 IP，也可填 auto:any。访问公网站点时需要",
+    ),
+    "tailscaleExitNodeLan": MessageLookupByLibrary.simpleMessage("允许访问局域网"),
+    "tailscaleExitNodeLanDesc": MessageLookupByLibrary.simpleMessage(
+      "使用出口节点时仍可访问本地网络",
+    ),
+    "tailscaleHostname": MessageLookupByLibrary.simpleMessage("设备名称"),
+    "tailscaleInvalidDns": MessageLookupByLibrary.simpleMessage(
+      "请使用 域名=服务器 格式，服务器为 IP 或 tls:// / https:// 地址，如 corp.example.com=10.1.0.53",
+    ),
+    "tailscaleInvalidEntry": MessageLookupByLibrary.simpleMessage(
+      "请输入域名、IP 或 CIDR",
+    ),
+    "tailscaleLoggedIn": MessageLookupByLibrary.simpleMessage("Tailscale 已登录"),
+    "tailscaleLogin": MessageLookupByLibrary.simpleMessage("登录"),
+    "tailscaleLoginDesc": MessageLookupByLibrary.simpleMessage(
+      "在浏览器中通过 tailnet 的 SSO/OIDC 登录，无需认证密钥",
+    ),
+    "tailscaleLoginNeeded": MessageLookupByLibrary.simpleMessage(
+      "Tailscale 需要登录",
+    ),
+    "tailscaleNetwork": MessageLookupByLibrary.simpleMessage("网络"),
+    "tailscaleNetworks": MessageLookupByLibrary.simpleMessage("网络列表"),
+    "tailscaleReset": MessageLookupByLibrary.simpleMessage("重置节点"),
+    "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(
+      "清除本设备的 tailnet 身份并作为新设备加入；旧设备需在管理后台中删除",
+    ),
+    "tailscaleRoutes": MessageLookupByLibrary.simpleMessage("分流列表"),
+    "tailscaleRoutesDesc": MessageLookupByLibrary.simpleMessage(
+      "规则模式下通过 Tailscale 访问的域名和 IP/CIDR。桌面端私有网段需开启 TUN",
+    ),
+    "tailscaleStarting": MessageLookupByLibrary.simpleMessage(
+      "正在启动 Tailscale…",
+    ),
+    "tailscaleUdp": MessageLookupByLibrary.simpleMessage("UDP"),
+    "tailscaleUdpDesc": MessageLookupByLibrary.simpleMessage(
+      "允许 UDP 流量通过 Tailscale",
+    ),
     "tcpConcurrent": MessageLookupByLibrary.simpleMessage("TCP并发"),
     "tcpConcurrentDesc": MessageLookupByLibrary.simpleMessage("开启后允许 TCP 并发连接"),
     "testUrl": MessageLookupByLibrary.simpleMessage("测试链接"),

@@ -1298,6 +1298,80 @@ class MessageLookup extends MessageLookupByLibrary {
       "تنظیمات پروکسی سیستم",
     ),
     "tab": MessageLookupByLibrary.simpleMessage("زبانه"),
+    "tailscale": MessageLookupByLibrary.simpleMessage("Tailscale"),
+    "tailscaleAcceptRoutes": MessageLookupByLibrary.simpleMessage(
+      "پذیرش مسیرهای زیرشبکه",
+    ),
+    "tailscaleAcceptRoutesDesc": MessageLookupByLibrary.simpleMessage(
+      "استفاده از مسیرهای زیرشبکه اعلام‌شده در tailnet",
+    ),
+    "tailscaleAddNetwork": MessageLookupByLibrary.simpleMessage("افزودن شبکه"),
+    "tailscaleAuthKey": MessageLookupByLibrary.simpleMessage("کلید احراز هویت"),
+    "tailscaleAuthKeyDesc": MessageLookupByLibrary.simpleMessage(
+      "اختیاری؛ بدون آن از «ورود» (SSO/OIDC) استفاده کنید",
+    ),
+    "tailscaleControlUrl": MessageLookupByLibrary.simpleMessage("سرور کنترل"),
+    "tailscaleControlUrlDesc": MessageLookupByLibrary.simpleMessage(
+      "خالی یعنی Tailscale. برای Headscale نشانی URL را وارد کنید",
+    ),
+    "tailscaleDeleteNetwork": MessageLookupByLibrary.simpleMessage("حذف شبکه"),
+    "tailscaleDesc": MessageLookupByLibrary.simpleMessage(
+      "ارسال دامنه‌ها و IPهای انتخابی از طریق tailnet",
+    ),
+    "tailscaleDns": MessageLookupByLibrary.simpleMessage("DNS شبکه tailnet"),
+    "tailscaleDnsDesc": MessageLookupByLibrary.simpleMessage(
+      "دامنه‌هایی که سرور DNS داخل tailnet آن‌ها را resolve می‌کند: دامنه=سرور (مثلاً corp.example.com=10.1.0.53). زیرشبکه‌های مقصد را به فهرست مسیریابی اضافه کنید",
+    ),
+    "tailscaleEnable": MessageLookupByLibrary.simpleMessage(
+      "فعال‌سازی Tailscale",
+    ),
+    "tailscaleEnableDesc": MessageLookupByLibrary.simpleMessage(
+      "پیوستن به tailnet با گره داخلی Tailscale",
+    ),
+    "tailscaleExitNode": MessageLookupByLibrary.simpleMessage("گره خروجی"),
+    "tailscaleExitNodeDesc": MessageLookupByLibrary.simpleMessage(
+      "نام یا IP دستگاه در tailnet، یا auto:any. برای سایت‌های عمومی لازم است",
+    ),
+    "tailscaleExitNodeLan": MessageLookupByLibrary.simpleMessage(
+      "اجازه دسترسی به LAN",
+    ),
+    "tailscaleExitNodeLanDesc": MessageLookupByLibrary.simpleMessage(
+      "دسترسی به شبکه محلی هنگام استفاده از گره خروجی",
+    ),
+    "tailscaleHostname": MessageLookupByLibrary.simpleMessage("نام دستگاه"),
+    "tailscaleInvalidDns": MessageLookupByLibrary.simpleMessage(
+      "از قالب دامنه=سرور استفاده کنید؛ سرور یک IP یا نشانی tls:// / https:// باشد، مثلاً corp.example.com=10.1.0.53",
+    ),
+    "tailscaleInvalidEntry": MessageLookupByLibrary.simpleMessage(
+      "یک دامنه، IP یا CIDR وارد کنید",
+    ),
+    "tailscaleLoggedIn": MessageLookupByLibrary.simpleMessage(
+      "ورود به Tailscale انجام شد",
+    ),
+    "tailscaleLogin": MessageLookupByLibrary.simpleMessage("ورود"),
+    "tailscaleLoginDesc": MessageLookupByLibrary.simpleMessage(
+      "ورود در مرورگر با SSO/OIDC شبکه tailnet، بدون نیاز به کلید احراز هویت",
+    ),
+    "tailscaleLoginNeeded": MessageLookupByLibrary.simpleMessage(
+      "Tailscale نیاز به ورود دارد",
+    ),
+    "tailscaleNetwork": MessageLookupByLibrary.simpleMessage("شبکه"),
+    "tailscaleNetworks": MessageLookupByLibrary.simpleMessage("شبکه‌ها"),
+    "tailscaleReset": MessageLookupByLibrary.simpleMessage("بازنشانی گره"),
+    "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(
+      "حذف هویت tailnet این دستگاه و پیوستن به‌عنوان دستگاه جدید؛ دستگاه قبلی را در کنسول مدیریت حذف کنید",
+    ),
+    "tailscaleRoutes": MessageLookupByLibrary.simpleMessage("فهرست مسیریابی"),
+    "tailscaleRoutesDesc": MessageLookupByLibrary.simpleMessage(
+      "دامنه‌ها و IP/CIDRهایی که در حالت قانون از Tailscale عبور می‌کنند. زیرشبکه‌های خصوصی در دسکتاپ به TUN نیاز دارند",
+    ),
+    "tailscaleStarting": MessageLookupByLibrary.simpleMessage(
+      "در حال راه‌اندازی Tailscale…",
+    ),
+    "tailscaleUdp": MessageLookupByLibrary.simpleMessage("UDP"),
+    "tailscaleUdpDesc": MessageLookupByLibrary.simpleMessage(
+      "ارسال ترافیک UDP از طریق Tailscale",
+    ),
     "tcpConcurrent": MessageLookupByLibrary.simpleMessage("اتصال همزمان TCP"),
     "tcpConcurrentDesc": MessageLookupByLibrary.simpleMessage(
       "اجازه به اتصال‌های همزمان TCP",

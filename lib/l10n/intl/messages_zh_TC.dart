@@ -919,6 +919,72 @@ class MessageLookup extends MessageLookupByLibrary {
     "systemProxy": MessageLookupByLibrary.simpleMessage("系統代理"),
     "systemProxyDesc": MessageLookupByLibrary.simpleMessage("設定系統代理"),
     "tab": MessageLookupByLibrary.simpleMessage("分頁"),
+    "tailscale": MessageLookupByLibrary.simpleMessage("Tailscale"),
+    "tailscaleAcceptRoutes": MessageLookupByLibrary.simpleMessage("接受子網路由"),
+    "tailscaleAcceptRoutesDesc": MessageLookupByLibrary.simpleMessage(
+      "使用 tailnet 中發佈的子網路由",
+    ),
+    "tailscaleAddNetwork": MessageLookupByLibrary.simpleMessage("新增網路"),
+    "tailscaleAuthKey": MessageLookupByLibrary.simpleMessage("驗證金鑰"),
+    "tailscaleAuthKeyDesc": MessageLookupByLibrary.simpleMessage(
+      "可選；不填寫時請使用「登入」（SSO/OIDC）",
+    ),
+    "tailscaleControlUrl": MessageLookupByLibrary.simpleMessage("控制伺服器"),
+    "tailscaleControlUrlDesc": MessageLookupByLibrary.simpleMessage(
+      "留空使用 Tailscale 官方伺服器，Headscale 請填寫其位址",
+    ),
+    "tailscaleDeleteNetwork": MessageLookupByLibrary.simpleMessage("刪除網路"),
+    "tailscaleDesc": MessageLookupByLibrary.simpleMessage(
+      "讓指定的網域和 IP 透過 Tailscale 網路存取",
+    ),
+    "tailscaleDns": MessageLookupByLibrary.simpleMessage("Tailnet DNS"),
+    "tailscaleDnsDesc": MessageLookupByLibrary.simpleMessage(
+      "由 tailnet 內 DNS 伺服器解析的網域，格式為 網域=伺服器（如 corp.example.com=10.1.0.53）。請將解析到的網段加入分流清單",
+    ),
+    "tailscaleEnable": MessageLookupByLibrary.simpleMessage("啟用 Tailscale"),
+    "tailscaleEnableDesc": MessageLookupByLibrary.simpleMessage(
+      "使用內建 Tailscale 節點加入 tailnet",
+    ),
+    "tailscaleExitNode": MessageLookupByLibrary.simpleMessage("出口節點"),
+    "tailscaleExitNodeDesc": MessageLookupByLibrary.simpleMessage(
+      "tailnet 中的裝置名稱或 IP，也可填 auto:any。存取公開網站時需要",
+    ),
+    "tailscaleExitNodeLan": MessageLookupByLibrary.simpleMessage("允許存取區域網路"),
+    "tailscaleExitNodeLanDesc": MessageLookupByLibrary.simpleMessage(
+      "使用出口節點時仍可存取本地網路",
+    ),
+    "tailscaleHostname": MessageLookupByLibrary.simpleMessage("裝置名稱"),
+    "tailscaleInvalidDns": MessageLookupByLibrary.simpleMessage(
+      "請使用 網域=伺服器 格式，伺服器為 IP 或 tls:// / https:// 位址，如 corp.example.com=10.1.0.53",
+    ),
+    "tailscaleInvalidEntry": MessageLookupByLibrary.simpleMessage(
+      "請輸入網域、IP 或 CIDR",
+    ),
+    "tailscaleLoggedIn": MessageLookupByLibrary.simpleMessage("Tailscale 已登入"),
+    "tailscaleLogin": MessageLookupByLibrary.simpleMessage("登入"),
+    "tailscaleLoginDesc": MessageLookupByLibrary.simpleMessage(
+      "在瀏覽器中透過 tailnet 的 SSO/OIDC 登入，無需驗證金鑰",
+    ),
+    "tailscaleLoginNeeded": MessageLookupByLibrary.simpleMessage(
+      "Tailscale 需要登入",
+    ),
+    "tailscaleNetwork": MessageLookupByLibrary.simpleMessage("網路"),
+    "tailscaleNetworks": MessageLookupByLibrary.simpleMessage("網路清單"),
+    "tailscaleReset": MessageLookupByLibrary.simpleMessage("重設節點"),
+    "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(
+      "清除本裝置的 tailnet 身分並以新裝置加入；舊裝置需在管理後台中刪除",
+    ),
+    "tailscaleRoutes": MessageLookupByLibrary.simpleMessage("分流清單"),
+    "tailscaleRoutesDesc": MessageLookupByLibrary.simpleMessage(
+      "規則模式下透過 Tailscale 存取的網域和 IP/CIDR。桌面端私有網段需開啟 TUN",
+    ),
+    "tailscaleStarting": MessageLookupByLibrary.simpleMessage(
+      "正在啟動 Tailscale…",
+    ),
+    "tailscaleUdp": MessageLookupByLibrary.simpleMessage("UDP"),
+    "tailscaleUdpDesc": MessageLookupByLibrary.simpleMessage(
+      "允許 UDP 流量透過 Tailscale",
+    ),
     "tcpConcurrent": MessageLookupByLibrary.simpleMessage("TCP 並發"),
     "tcpConcurrentDesc": MessageLookupByLibrary.simpleMessage("開啟後允許 TCP 併發連接"),
     "testUrl": MessageLookupByLibrary.simpleMessage("測試連結"),

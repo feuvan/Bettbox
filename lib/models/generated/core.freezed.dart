@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SetupParams {
 
-@JsonKey(name: 'selected-map') Map<String, String> get selectedMap;@JsonKey(name: 'test-url') String get testUrl;@JsonKey(name: 'override-test-url') bool get overrideTestUrl;
+@JsonKey(name: 'selected-map') Map<String, String> get selectedMap;@JsonKey(name: 'test-url') String get testUrl;@JsonKey(name: 'override-test-url') bool get overrideTestUrl;@JsonKey(name: 'tailscale-proxy') String? get tailscaleProxy;@JsonKey(name: 'tailscale-dns-domains') List<String> get tailscaleDnsDomains;@JsonKey(name: 'reset-tailscale-dirs') List<String> get resetTailscaleDirs;
 /// Create a copy of SetupParams
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $SetupParamsCopyWith<SetupParams> get copyWith => _$SetupParamsCopyWithImpl<Setu
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SetupParams&&const DeepCollectionEquality().equals(other.selectedMap, selectedMap)&&(identical(other.testUrl, testUrl) || other.testUrl == testUrl)&&(identical(other.overrideTestUrl, overrideTestUrl) || other.overrideTestUrl == overrideTestUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SetupParams&&const DeepCollectionEquality().equals(other.selectedMap, selectedMap)&&(identical(other.testUrl, testUrl) || other.testUrl == testUrl)&&(identical(other.overrideTestUrl, overrideTestUrl) || other.overrideTestUrl == overrideTestUrl)&&(identical(other.tailscaleProxy, tailscaleProxy) || other.tailscaleProxy == tailscaleProxy)&&const DeepCollectionEquality().equals(other.tailscaleDnsDomains, tailscaleDnsDomains)&&const DeepCollectionEquality().equals(other.resetTailscaleDirs, resetTailscaleDirs));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(selectedMap),testUrl,overrideTestUrl);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(selectedMap),testUrl,overrideTestUrl,tailscaleProxy,const DeepCollectionEquality().hash(tailscaleDnsDomains),const DeepCollectionEquality().hash(resetTailscaleDirs));
 
 @override
 String toString() {
-  return 'SetupParams(selectedMap: $selectedMap, testUrl: $testUrl, overrideTestUrl: $overrideTestUrl)';
+  return 'SetupParams(selectedMap: $selectedMap, testUrl: $testUrl, overrideTestUrl: $overrideTestUrl, tailscaleProxy: $tailscaleProxy, tailscaleDnsDomains: $tailscaleDnsDomains, resetTailscaleDirs: $resetTailscaleDirs)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $SetupParamsCopyWith<$Res>  {
   factory $SetupParamsCopyWith(SetupParams value, $Res Function(SetupParams) _then) = _$SetupParamsCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'selected-map') Map<String, String> selectedMap,@JsonKey(name: 'test-url') String testUrl,@JsonKey(name: 'override-test-url') bool overrideTestUrl
+@JsonKey(name: 'selected-map') Map<String, String> selectedMap,@JsonKey(name: 'test-url') String testUrl,@JsonKey(name: 'override-test-url') bool overrideTestUrl,@JsonKey(name: 'tailscale-proxy') String? tailscaleProxy,@JsonKey(name: 'tailscale-dns-domains') List<String> tailscaleDnsDomains,@JsonKey(name: 'reset-tailscale-dirs') List<String> resetTailscaleDirs
 });
 
 
@@ -65,12 +65,15 @@ class _$SetupParamsCopyWithImpl<$Res>
 
 /// Create a copy of SetupParams
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? selectedMap = null,Object? testUrl = null,Object? overrideTestUrl = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? selectedMap = null,Object? testUrl = null,Object? overrideTestUrl = null,Object? tailscaleProxy = freezed,Object? tailscaleDnsDomains = null,Object? resetTailscaleDirs = null,}) {
   return _then(_self.copyWith(
 selectedMap: null == selectedMap ? _self.selectedMap : selectedMap // ignore: cast_nullable_to_non_nullable
 as Map<String, String>,testUrl: null == testUrl ? _self.testUrl : testUrl // ignore: cast_nullable_to_non_nullable
 as String,overrideTestUrl: null == overrideTestUrl ? _self.overrideTestUrl : overrideTestUrl // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,tailscaleProxy: freezed == tailscaleProxy ? _self.tailscaleProxy : tailscaleProxy // ignore: cast_nullable_to_non_nullable
+as String?,tailscaleDnsDomains: null == tailscaleDnsDomains ? _self.tailscaleDnsDomains : tailscaleDnsDomains // ignore: cast_nullable_to_non_nullable
+as List<String>,resetTailscaleDirs: null == resetTailscaleDirs ? _self.resetTailscaleDirs : resetTailscaleDirs // ignore: cast_nullable_to_non_nullable
+as List<String>,
   ));
 }
 
@@ -155,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'selected-map')  Map<String, String> selectedMap, @JsonKey(name: 'test-url')  String testUrl, @JsonKey(name: 'override-test-url')  bool overrideTestUrl)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'selected-map')  Map<String, String> selectedMap, @JsonKey(name: 'test-url')  String testUrl, @JsonKey(name: 'override-test-url')  bool overrideTestUrl, @JsonKey(name: 'tailscale-proxy')  String? tailscaleProxy, @JsonKey(name: 'tailscale-dns-domains')  List<String> tailscaleDnsDomains, @JsonKey(name: 'reset-tailscale-dirs')  List<String> resetTailscaleDirs)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SetupParams() when $default != null:
-return $default(_that.selectedMap,_that.testUrl,_that.overrideTestUrl);case _:
+return $default(_that.selectedMap,_that.testUrl,_that.overrideTestUrl,_that.tailscaleProxy,_that.tailscaleDnsDomains,_that.resetTailscaleDirs);case _:
   return orElse();
 
 }
@@ -176,10 +179,10 @@ return $default(_that.selectedMap,_that.testUrl,_that.overrideTestUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'selected-map')  Map<String, String> selectedMap, @JsonKey(name: 'test-url')  String testUrl, @JsonKey(name: 'override-test-url')  bool overrideTestUrl)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'selected-map')  Map<String, String> selectedMap, @JsonKey(name: 'test-url')  String testUrl, @JsonKey(name: 'override-test-url')  bool overrideTestUrl, @JsonKey(name: 'tailscale-proxy')  String? tailscaleProxy, @JsonKey(name: 'tailscale-dns-domains')  List<String> tailscaleDnsDomains, @JsonKey(name: 'reset-tailscale-dirs')  List<String> resetTailscaleDirs)  $default,) {final _that = this;
 switch (_that) {
 case _SetupParams():
-return $default(_that.selectedMap,_that.testUrl,_that.overrideTestUrl);case _:
+return $default(_that.selectedMap,_that.testUrl,_that.overrideTestUrl,_that.tailscaleProxy,_that.tailscaleDnsDomains,_that.resetTailscaleDirs);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +199,10 @@ return $default(_that.selectedMap,_that.testUrl,_that.overrideTestUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'selected-map')  Map<String, String> selectedMap, @JsonKey(name: 'test-url')  String testUrl, @JsonKey(name: 'override-test-url')  bool overrideTestUrl)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'selected-map')  Map<String, String> selectedMap, @JsonKey(name: 'test-url')  String testUrl, @JsonKey(name: 'override-test-url')  bool overrideTestUrl, @JsonKey(name: 'tailscale-proxy')  String? tailscaleProxy, @JsonKey(name: 'tailscale-dns-domains')  List<String> tailscaleDnsDomains, @JsonKey(name: 'reset-tailscale-dirs')  List<String> resetTailscaleDirs)?  $default,) {final _that = this;
 switch (_that) {
 case _SetupParams() when $default != null:
-return $default(_that.selectedMap,_that.testUrl,_that.overrideTestUrl);case _:
+return $default(_that.selectedMap,_that.testUrl,_that.overrideTestUrl,_that.tailscaleProxy,_that.tailscaleDnsDomains,_that.resetTailscaleDirs);case _:
   return null;
 
 }
@@ -211,7 +214,7 @@ return $default(_that.selectedMap,_that.testUrl,_that.overrideTestUrl);case _:
 @JsonSerializable()
 
 class _SetupParams implements SetupParams {
-  const _SetupParams({@JsonKey(name: 'selected-map') required final  Map<String, String> selectedMap, @JsonKey(name: 'test-url') required this.testUrl, @JsonKey(name: 'override-test-url') this.overrideTestUrl = true}): _selectedMap = selectedMap;
+  const _SetupParams({@JsonKey(name: 'selected-map') required final  Map<String, String> selectedMap, @JsonKey(name: 'test-url') required this.testUrl, @JsonKey(name: 'override-test-url') this.overrideTestUrl = true, @JsonKey(name: 'tailscale-proxy') this.tailscaleProxy, @JsonKey(name: 'tailscale-dns-domains') final  List<String> tailscaleDnsDomains = const [], @JsonKey(name: 'reset-tailscale-dirs') final  List<String> resetTailscaleDirs = const []}): _selectedMap = selectedMap,_tailscaleDnsDomains = tailscaleDnsDomains,_resetTailscaleDirs = resetTailscaleDirs;
   factory _SetupParams.fromJson(Map<String, dynamic> json) => _$SetupParamsFromJson(json);
 
  final  Map<String, String> _selectedMap;
@@ -223,6 +226,21 @@ class _SetupParams implements SetupParams {
 
 @override@JsonKey(name: 'test-url') final  String testUrl;
 @override@JsonKey(name: 'override-test-url') final  bool overrideTestUrl;
+@override@JsonKey(name: 'tailscale-proxy') final  String? tailscaleProxy;
+ final  List<String> _tailscaleDnsDomains;
+@override@JsonKey(name: 'tailscale-dns-domains') List<String> get tailscaleDnsDomains {
+  if (_tailscaleDnsDomains is EqualUnmodifiableListView) return _tailscaleDnsDomains;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_tailscaleDnsDomains);
+}
+
+ final  List<String> _resetTailscaleDirs;
+@override@JsonKey(name: 'reset-tailscale-dirs') List<String> get resetTailscaleDirs {
+  if (_resetTailscaleDirs is EqualUnmodifiableListView) return _resetTailscaleDirs;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_resetTailscaleDirs);
+}
+
 
 /// Create a copy of SetupParams
 /// with the given fields replaced by the non-null parameter values.
@@ -237,16 +255,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SetupParams&&const DeepCollectionEquality().equals(other._selectedMap, _selectedMap)&&(identical(other.testUrl, testUrl) || other.testUrl == testUrl)&&(identical(other.overrideTestUrl, overrideTestUrl) || other.overrideTestUrl == overrideTestUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SetupParams&&const DeepCollectionEquality().equals(other._selectedMap, _selectedMap)&&(identical(other.testUrl, testUrl) || other.testUrl == testUrl)&&(identical(other.overrideTestUrl, overrideTestUrl) || other.overrideTestUrl == overrideTestUrl)&&(identical(other.tailscaleProxy, tailscaleProxy) || other.tailscaleProxy == tailscaleProxy)&&const DeepCollectionEquality().equals(other._tailscaleDnsDomains, _tailscaleDnsDomains)&&const DeepCollectionEquality().equals(other._resetTailscaleDirs, _resetTailscaleDirs));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_selectedMap),testUrl,overrideTestUrl);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_selectedMap),testUrl,overrideTestUrl,tailscaleProxy,const DeepCollectionEquality().hash(_tailscaleDnsDomains),const DeepCollectionEquality().hash(_resetTailscaleDirs));
 
 @override
 String toString() {
-  return 'SetupParams(selectedMap: $selectedMap, testUrl: $testUrl, overrideTestUrl: $overrideTestUrl)';
+  return 'SetupParams(selectedMap: $selectedMap, testUrl: $testUrl, overrideTestUrl: $overrideTestUrl, tailscaleProxy: $tailscaleProxy, tailscaleDnsDomains: $tailscaleDnsDomains, resetTailscaleDirs: $resetTailscaleDirs)';
 }
 
 
@@ -257,7 +275,7 @@ abstract mixin class _$SetupParamsCopyWith<$Res> implements $SetupParamsCopyWith
   factory _$SetupParamsCopyWith(_SetupParams value, $Res Function(_SetupParams) _then) = __$SetupParamsCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'selected-map') Map<String, String> selectedMap,@JsonKey(name: 'test-url') String testUrl,@JsonKey(name: 'override-test-url') bool overrideTestUrl
+@JsonKey(name: 'selected-map') Map<String, String> selectedMap,@JsonKey(name: 'test-url') String testUrl,@JsonKey(name: 'override-test-url') bool overrideTestUrl,@JsonKey(name: 'tailscale-proxy') String? tailscaleProxy,@JsonKey(name: 'tailscale-dns-domains') List<String> tailscaleDnsDomains,@JsonKey(name: 'reset-tailscale-dirs') List<String> resetTailscaleDirs
 });
 
 
@@ -274,12 +292,15 @@ class __$SetupParamsCopyWithImpl<$Res>
 
 /// Create a copy of SetupParams
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? selectedMap = null,Object? testUrl = null,Object? overrideTestUrl = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? selectedMap = null,Object? testUrl = null,Object? overrideTestUrl = null,Object? tailscaleProxy = freezed,Object? tailscaleDnsDomains = null,Object? resetTailscaleDirs = null,}) {
   return _then(_SetupParams(
 selectedMap: null == selectedMap ? _self._selectedMap : selectedMap // ignore: cast_nullable_to_non_nullable
 as Map<String, String>,testUrl: null == testUrl ? _self.testUrl : testUrl // ignore: cast_nullable_to_non_nullable
 as String,overrideTestUrl: null == overrideTestUrl ? _self.overrideTestUrl : overrideTestUrl // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,tailscaleProxy: freezed == tailscaleProxy ? _self.tailscaleProxy : tailscaleProxy // ignore: cast_nullable_to_non_nullable
+as String?,tailscaleDnsDomains: null == tailscaleDnsDomains ? _self._tailscaleDnsDomains : tailscaleDnsDomains // ignore: cast_nullable_to_non_nullable
+as List<String>,resetTailscaleDirs: null == resetTailscaleDirs ? _self._resetTailscaleDirs : resetTailscaleDirs // ignore: cast_nullable_to_non_nullable
+as List<String>,
   ));
 }
 

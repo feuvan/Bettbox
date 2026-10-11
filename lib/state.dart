@@ -35,6 +35,10 @@ class GlobalState {
   bool isService = false;
   bool isExiting = false;
   bool isScreenOn = true;
+  // One-shot: the next core setup deletes these Tailscale node state dirs.
+  List<String> resetTailscaleDirs = [];
+  // Name of the injected Tailscale proxy in the current profile's config.
+  String? tailscaleName;
   Timer? timer;
   Timer? groupsUpdateTimer;
   Config? _config;
@@ -651,10 +655,17 @@ class GlobalState {
   Future<SetupParams> getSetupParams({required ClashConfig pathConfig}) async {
     final clashConfig = await patchRawConfig(patchConfig: pathConfig);
     await _writeRunningConfig(clashConfig);
+    final resetTailscaleDirs = this.resetTailscaleDirs;
+    this.resetTailscaleDirs = [];
     return SetupParams(
       selectedMap: config.currentProfile?.selectedMap ?? {},
       testUrl: config.appSetting.testUrl,
       overrideTestUrl: config.overrideTestUrl,
+      tailscaleProxy: tailscaleName,
+      tailscaleDnsDomains: tailscaleDnsDomains(
+        config.tailscaleProps.runningNetwork?.dns ?? const [],
+      ),
+      resetTailscaleDirs: resetTailscaleDirs,
     );
   }
 
@@ -726,6 +737,7 @@ class GlobalState {
         ),
         bypassPrivateRouteAddress:
             config.networkProps.realBypassPrivateRouteAddress,
+        forceRouteAddress: config.tailscaleProps.tunRouteCidrs,
       ),
     );
     rawConfig['external-controller'] = realPatchConfig.allowLan
@@ -1071,6 +1083,116 @@ class GlobalState {
       } else {
         rules = [...overrideData.runningRule, ...rules];
       }
+    }
+
+    final tailscale = config.tailscaleProps.runningNetwork;
+    if (profile == null) tailscaleName = null;
+    if (tailscale != null) {
+      // Every name this network handles: route entries and tailnet DNS domains.
+      final entries = [
+        ...tailscale.routes,
+        ...tailscaleDnsDomains(tailscale.dns),
+      ];
+      final proxies = rawConfig['proxies'] is List
+          ? rawConfig['proxies'] as List
+          : [];
+      final proxyGroups = rawConfig['proxy-groups'] is List
+          ? rawConfig['proxy-groups'] as List
+          : [];
+      final takenNames = {
+        for (final item in [...proxies, ...proxyGroups])
+          if (item is Map) item['name'],
+        // Stale switch keys would rewrite rules targeting the name to PASS.
+        ...targetProfile.groupSwitches.keys,
+      };
+      var name = tailscaleProxyName;
+      for (var i = 2; takenNames.contains(name); i++) {
+        name = '$tailscaleProxyName-$i';
+      }
+      if (profile == null) tailscaleName = name;
+      rawConfig['proxies'] = [
+        ...proxies,
+        {
+          'name': name,
+          'type': 'tailscale',
+          'hostname': tailscale.hostname.isNotEmpty
+              ? tailscale.hostname
+              : 'bettbox',
+          if (tailscale.authKey.isNotEmpty) 'auth-key': tailscale.authKey,
+          if (tailscale.controlUrl.isNotEmpty)
+            'control-url': tailscale.controlUrl,
+          'state-dir': tailscale.stateDir,
+          'udp': tailscale.udp,
+          'accept-routes': tailscale.acceptRoutes,
+          if (tailscale.exitNode.isNotEmpty) ...{
+            'exit-node': tailscale.exitNode,
+            'exit-node-allow-lan-access': tailscale.exitNodeAllowLanAccess,
+          },
+        },
+      ];
+      // Keep the node out of include-all groups so only the rules below use
+      // it. `filter` also skips health checks; a group with its own filter
+      // rarely matches the name, so `exclude-filter` covers that case.
+      for (final group in proxyGroups) {
+        if (group is! Map ||
+            (group['include-all'] != true &&
+                group['include-all-proxies'] != true)) {
+          continue;
+        }
+        final filter = group['filter']?.toString() ?? '';
+        final excludeFilter = group['exclude-filter']?.toString() ?? '';
+        if (filter.isEmpty) {
+          group['filter'] = '^(?!$name\$)';
+        } else {
+          group['exclude-filter'] = excludeFilter.isEmpty
+              ? '^$name\$'
+              : '$excludeFilter`^$name\$';
+        }
+      }
+      final dns = rawConfig['dns'] as Map;
+      // tsnet resolves its control server through mihomo DNS and must reach
+      // it directly; keep it off a routed `+.domain` (see policy below).
+      final host = Uri.tryParse(tailscale.controlUrl)?.host ?? '';
+      final controlHost = host.isNotEmpty ? host : 'controlplane.tailscale.com';
+      final selfResolve =
+          tailscaleRoutesCover(entries, controlHost) &&
+          dns['nameserver'] is List;
+      rules = [
+        ...tailscaleRules(
+          tailscale.routes,
+          name,
+          dns: tailscale.dns,
+          except: selfResolve ? controlHost : null,
+        ),
+        ...rules,
+      ];
+      final cidrs = tailscaleRouteCidrs(tailscale.routes);
+      final sniffer = rawConfig['sniffer'];
+      if (cidrs.isNotEmpty && sniffer is Map) {
+        // Sniffed domains would otherwise clear DstIP and miss the IP rules.
+        final skip = sniffer['skip-dst-address'];
+        sniffer['skip-dst-address'] = [if (skip is List) ...skip, ...cidrs];
+      }
+      final policy = tailscaleNameserverPolicy(
+        tailscale.routes,
+        name,
+        dns: tailscale.dns,
+        udp: tailscale.udp,
+      );
+      final existingPolicy = dns['nameserver-policy'] is Map
+          ? dns['nameserver-policy'] as Map
+          : {};
+      // An exact entry beats a routed `+.domain`, so the node never asks
+      // itself for its control server.
+      dns['nameserver-policy'] = {
+        ...policy,
+        // After the `+.` keys: inserting `+.x` also overwrites a bare `x`.
+        if (selfResolve) controlHost: List.of(dns['nameserver'] as List),
+        for (final entry in existingPolicy.entries)
+          if (!policy.containsKey(entry.key) &&
+              !(selfResolve && entry.key == controlHost))
+            entry.key: entry.value,
+      };
     }
 
     if (config.vpnProps.loopbackProtection) {

@@ -1019,6 +1019,74 @@ class MessageLookup extends MessageLookupByLibrary {
     "systemProxy": MessageLookupByLibrary.simpleMessage("시스템 프록시"),
     "systemProxyDesc": MessageLookupByLibrary.simpleMessage("시스템 프록시 설정"),
     "tab": MessageLookupByLibrary.simpleMessage("탭"),
+    "tailscale": MessageLookupByLibrary.simpleMessage("Tailscale"),
+    "tailscaleAcceptRoutes": MessageLookupByLibrary.simpleMessage("서브넷 경로 수락"),
+    "tailscaleAcceptRoutesDesc": MessageLookupByLibrary.simpleMessage(
+      "tailnet에 광고된 서브넷 경로 사용",
+    ),
+    "tailscaleAddNetwork": MessageLookupByLibrary.simpleMessage("네트워크 추가"),
+    "tailscaleAuthKey": MessageLookupByLibrary.simpleMessage("인증 키"),
+    "tailscaleAuthKeyDesc": MessageLookupByLibrary.simpleMessage(
+      "선택 사항. 없으면 \'로그인\'(SSO/OIDC)을 사용하세요",
+    ),
+    "tailscaleControlUrl": MessageLookupByLibrary.simpleMessage("제어 서버"),
+    "tailscaleControlUrlDesc": MessageLookupByLibrary.simpleMessage(
+      "비워 두면 Tailscale을 사용합니다. Headscale은 URL을 입력하세요",
+    ),
+    "tailscaleDeleteNetwork": MessageLookupByLibrary.simpleMessage("네트워크 삭제"),
+    "tailscaleDesc": MessageLookupByLibrary.simpleMessage(
+      "지정한 도메인과 IP를 tailnet을 통해 연결",
+    ),
+    "tailscaleDns": MessageLookupByLibrary.simpleMessage("Tailnet DNS"),
+    "tailscaleDnsDesc": MessageLookupByLibrary.simpleMessage(
+      "tailnet 내부 DNS 서버로 해석할 도메인 (도메인=서버, 예: corp.example.com=10.1.0.53). 해석되는 서브넷은 라우팅 목록에 추가하세요",
+    ),
+    "tailscaleEnable": MessageLookupByLibrary.simpleMessage("Tailscale 사용"),
+    "tailscaleEnableDesc": MessageLookupByLibrary.simpleMessage(
+      "내장 Tailscale 노드로 tailnet에 참여",
+    ),
+    "tailscaleExitNode": MessageLookupByLibrary.simpleMessage("출구 노드"),
+    "tailscaleExitNodeDesc": MessageLookupByLibrary.simpleMessage(
+      "tailnet 기기 이름 또는 IP, 또는 auto:any. 공개 사이트 접속에 필요",
+    ),
+    "tailscaleExitNodeLan": MessageLookupByLibrary.simpleMessage("LAN 접근 허용"),
+    "tailscaleExitNodeLanDesc": MessageLookupByLibrary.simpleMessage(
+      "출구 노드 사용 중에도 로컬 네트워크에 접근",
+    ),
+    "tailscaleHostname": MessageLookupByLibrary.simpleMessage("기기 이름"),
+    "tailscaleInvalidDns": MessageLookupByLibrary.simpleMessage(
+      "도메인=서버 형식, 서버는 IP 또는 tls:// / https:// URL (예: corp.example.com=10.1.0.53)",
+    ),
+    "tailscaleInvalidEntry": MessageLookupByLibrary.simpleMessage(
+      "도메인, IP 또는 CIDR을 입력하세요",
+    ),
+    "tailscaleLoggedIn": MessageLookupByLibrary.simpleMessage(
+      "Tailscale에 로그인했습니다",
+    ),
+    "tailscaleLogin": MessageLookupByLibrary.simpleMessage("로그인"),
+    "tailscaleLoginDesc": MessageLookupByLibrary.simpleMessage(
+      "브라우저에서 tailnet의 SSO/OIDC로 로그인 (인증 키 불필요)",
+    ),
+    "tailscaleLoginNeeded": MessageLookupByLibrary.simpleMessage(
+      "Tailscale 로그인이 필요합니다",
+    ),
+    "tailscaleNetwork": MessageLookupByLibrary.simpleMessage("네트워크"),
+    "tailscaleNetworks": MessageLookupByLibrary.simpleMessage("네트워크 목록"),
+    "tailscaleReset": MessageLookupByLibrary.simpleMessage("노드 초기화"),
+    "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(
+      "이 기기의 tailnet ID를 삭제하고 새 기기로 참여합니다. 이전 기기는 관리 콘솔에서 삭제하세요",
+    ),
+    "tailscaleRoutes": MessageLookupByLibrary.simpleMessage("라우팅 목록"),
+    "tailscaleRoutesDesc": MessageLookupByLibrary.simpleMessage(
+      "규칙 모드에서 Tailscale을 거치는 도메인과 IP/CIDR. 데스크톱의 사설 서브넷은 TUN이 필요",
+    ),
+    "tailscaleStarting": MessageLookupByLibrary.simpleMessage(
+      "Tailscale 시작 중…",
+    ),
+    "tailscaleUdp": MessageLookupByLibrary.simpleMessage("UDP"),
+    "tailscaleUdpDesc": MessageLookupByLibrary.simpleMessage(
+      "UDP 트래픽을 Tailscale로 전송",
+    ),
     "tcpConcurrent": MessageLookupByLibrary.simpleMessage("TCP 동시 연결"),
     "tcpConcurrentDesc": MessageLookupByLibrary.simpleMessage(
       "TCP 동시 다중 연결 허용",

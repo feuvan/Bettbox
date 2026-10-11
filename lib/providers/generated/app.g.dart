@@ -216,6 +216,22 @@ final localIpProvider = AutoDisposeNotifierProvider<LocalIp, String?>.internal(
 );
 
 typedef _$LocalIp = AutoDisposeNotifier<String?>;
+String _$tailscaleAuthUrlHash() => r'7c254faf6b8bcadf365a848219ab64a7ff874a78';
+
+/// See also [TailscaleAuthUrl].
+@ProviderFor(TailscaleAuthUrl)
+final tailscaleAuthUrlProvider =
+    AutoDisposeNotifierProvider<TailscaleAuthUrl, String?>.internal(
+      TailscaleAuthUrl.new,
+      name: r'tailscaleAuthUrlProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$tailscaleAuthUrlHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+typedef _$TailscaleAuthUrl = AutoDisposeNotifier<String?>;
 String _$runTimeHash() => r'9aab44f2234590a70cbf0ff7394e496c2c97c00e';
 
 /// See also [RunTime].

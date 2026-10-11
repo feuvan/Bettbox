@@ -133,7 +133,7 @@ enum ResultType {
   error,
 }
 
-enum AppMessageType { log, delay, request, loaded }
+enum AppMessageType { log, delay, request, loaded, tailscaleAuth }
 
 enum InvokeMessageType { protect, process }
 

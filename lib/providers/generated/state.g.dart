@@ -6,7 +6,7 @@ part of '../state.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$configStateHash() => r'd827b2e403f65301fc2b85ed4e84d6243cc44586';
+String _$configStateHash() => r'f8c0b4889d32906b2a6c3ac6535b6f258ed018ee';
 
 /// See also [configState].
 @ProviderFor(configState)
@@ -97,7 +97,7 @@ final coreStateProvider = AutoDisposeProvider<CoreState>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CoreStateRef = AutoDisposeProviderRef<CoreState>;
-String _$updateParamsHash() => r'b8f29f135c32ce73f1541d8c6b8e94b2c254d666';
+String _$updateParamsHash() => r'0b9229800aa9e7994a02394f599768cf51074a6b';
 
 /// See also [updateParams].
 @ProviderFor(updateParams)

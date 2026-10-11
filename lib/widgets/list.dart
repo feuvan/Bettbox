@@ -107,6 +107,7 @@ class InputDelegate extends Delegate {
   final String? hintText;
   final Function(String? value)? onChanged;
   final FormFieldValidator<String>? validator;
+  final bool obscureText;
 
   final String? resetValue;
 
@@ -118,6 +119,7 @@ class InputDelegate extends Delegate {
     required this.onChanged,
     this.resetValue,
     this.validator,
+    this.obscureText = false,
   });
 }
 
@@ -407,6 +409,7 @@ class ListItem<T> extends StatelessWidget {
                     hintText: inputDelegate.hintText,
                     resetValue: inputDelegate.resetValue,
                     validator: inputDelegate.validator,
+                    obscureText: inputDelegate.obscureText,
                   ),
                 );
                 inputDelegate.onChanged!(value);

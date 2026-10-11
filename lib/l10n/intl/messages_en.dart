@@ -1270,6 +1270,82 @@ class MessageLookup extends MessageLookupByLibrary {
     "systemProxy": MessageLookupByLibrary.simpleMessage("System Proxy"),
     "systemProxyDesc": MessageLookupByLibrary.simpleMessage("Set system proxy"),
     "tab": MessageLookupByLibrary.simpleMessage("Tab"),
+    "tailscale": MessageLookupByLibrary.simpleMessage("Tailscale"),
+    "tailscaleAcceptRoutes": MessageLookupByLibrary.simpleMessage(
+      "Accept subnet routes",
+    ),
+    "tailscaleAcceptRoutesDesc": MessageLookupByLibrary.simpleMessage(
+      "Use subnet routes advertised in the tailnet",
+    ),
+    "tailscaleAddNetwork": MessageLookupByLibrary.simpleMessage("Add network"),
+    "tailscaleAuthKey": MessageLookupByLibrary.simpleMessage("Auth key"),
+    "tailscaleAuthKeyDesc": MessageLookupByLibrary.simpleMessage(
+      "Optional; without one, use Log in (SSO/OIDC)",
+    ),
+    "tailscaleControlUrl": MessageLookupByLibrary.simpleMessage(
+      "Control server",
+    ),
+    "tailscaleControlUrlDesc": MessageLookupByLibrary.simpleMessage(
+      "Empty uses Tailscale. Set a URL for Headscale",
+    ),
+    "tailscaleDeleteNetwork": MessageLookupByLibrary.simpleMessage(
+      "Delete network",
+    ),
+    "tailscaleDesc": MessageLookupByLibrary.simpleMessage(
+      "Route chosen domains and IPs through your tailnet",
+    ),
+    "tailscaleDns": MessageLookupByLibrary.simpleMessage("Tailnet DNS"),
+    "tailscaleDnsDesc": MessageLookupByLibrary.simpleMessage(
+      "Domains resolved by a DNS server inside the tailnet, as domain=server (e.g. corp.example.com=10.1.0.53). Add the subnets they resolve to under Routing list",
+    ),
+    "tailscaleEnable": MessageLookupByLibrary.simpleMessage("Enable Tailscale"),
+    "tailscaleEnableDesc": MessageLookupByLibrary.simpleMessage(
+      "Join the tailnet with the built-in Tailscale node",
+    ),
+    "tailscaleExitNode": MessageLookupByLibrary.simpleMessage("Exit node"),
+    "tailscaleExitNodeDesc": MessageLookupByLibrary.simpleMessage(
+      "Tailnet device name or IP, or auto:any. Needed for public sites",
+    ),
+    "tailscaleExitNodeLan": MessageLookupByLibrary.simpleMessage(
+      "Allow LAN access",
+    ),
+    "tailscaleExitNodeLanDesc": MessageLookupByLibrary.simpleMessage(
+      "Keep the local network reachable while using the exit node",
+    ),
+    "tailscaleHostname": MessageLookupByLibrary.simpleMessage("Device name"),
+    "tailscaleInvalidDns": MessageLookupByLibrary.simpleMessage(
+      "Use domain=server with an IP server or a tls:// / https:// URL, e.g. corp.example.com=10.1.0.53",
+    ),
+    "tailscaleInvalidEntry": MessageLookupByLibrary.simpleMessage(
+      "Enter a domain, IP or CIDR",
+    ),
+    "tailscaleLoggedIn": MessageLookupByLibrary.simpleMessage(
+      "Tailscale logged in",
+    ),
+    "tailscaleLogin": MessageLookupByLibrary.simpleMessage("Log in"),
+    "tailscaleLoginDesc": MessageLookupByLibrary.simpleMessage(
+      "Sign in in the browser with your tailnet\'s SSO/OIDC; no auth key needed",
+    ),
+    "tailscaleLoginNeeded": MessageLookupByLibrary.simpleMessage(
+      "Tailscale needs login",
+    ),
+    "tailscaleNetwork": MessageLookupByLibrary.simpleMessage("Network"),
+    "tailscaleNetworks": MessageLookupByLibrary.simpleMessage("Networks"),
+    "tailscaleReset": MessageLookupByLibrary.simpleMessage("Reset node"),
+    "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(
+      "Forget this device\'s tailnet identity and join as a new device; remove the old one in the admin console",
+    ),
+    "tailscaleRoutes": MessageLookupByLibrary.simpleMessage("Routing list"),
+    "tailscaleRoutesDesc": MessageLookupByLibrary.simpleMessage(
+      "Domains and IPs/CIDRs sent through Tailscale in Rule mode. Private subnets need TUN on desktop",
+    ),
+    "tailscaleStarting": MessageLookupByLibrary.simpleMessage(
+      "Starting Tailscale…",
+    ),
+    "tailscaleUdp": MessageLookupByLibrary.simpleMessage("UDP"),
+    "tailscaleUdpDesc": MessageLookupByLibrary.simpleMessage(
+      "Send UDP traffic through Tailscale",
+    ),
     "tcpConcurrent": MessageLookupByLibrary.simpleMessage("TCP Concurrent"),
     "tcpConcurrentDesc": MessageLookupByLibrary.simpleMessage(
       "Allow concurrent TCP connections",

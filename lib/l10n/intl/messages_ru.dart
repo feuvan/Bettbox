@@ -1311,6 +1311,90 @@ class MessageLookup extends MessageLookupByLibrary {
       "Настроить системный прокси",
     ),
     "tab": MessageLookupByLibrary.simpleMessage("Вкладки"),
+    "tailscale": MessageLookupByLibrary.simpleMessage("Tailscale"),
+    "tailscaleAcceptRoutes": MessageLookupByLibrary.simpleMessage(
+      "Принимать маршруты подсетей",
+    ),
+    "tailscaleAcceptRoutesDesc": MessageLookupByLibrary.simpleMessage(
+      "Использовать маршруты подсетей, объявленные в tailnet",
+    ),
+    "tailscaleAddNetwork": MessageLookupByLibrary.simpleMessage(
+      "Добавить сеть",
+    ),
+    "tailscaleAuthKey": MessageLookupByLibrary.simpleMessage(
+      "Ключ авторизации",
+    ),
+    "tailscaleAuthKeyDesc": MessageLookupByLibrary.simpleMessage(
+      "Необязательно; без ключа используйте «Войти» (SSO/OIDC)",
+    ),
+    "tailscaleControlUrl": MessageLookupByLibrary.simpleMessage(
+      "Сервер управления",
+    ),
+    "tailscaleControlUrlDesc": MessageLookupByLibrary.simpleMessage(
+      "Пусто — Tailscale. Для Headscale укажите URL",
+    ),
+    "tailscaleDeleteNetwork": MessageLookupByLibrary.simpleMessage(
+      "Удалить сеть",
+    ),
+    "tailscaleDesc": MessageLookupByLibrary.simpleMessage(
+      "Направлять выбранные домены и IP через tailnet",
+    ),
+    "tailscaleDns": MessageLookupByLibrary.simpleMessage("DNS tailnet"),
+    "tailscaleDnsDesc": MessageLookupByLibrary.simpleMessage(
+      "Домены, которые разрешает DNS-сервер внутри tailnet: домен=сервер (например, corp.example.com=10.1.0.53). Добавьте их подсети в список маршрутизации",
+    ),
+    "tailscaleEnable": MessageLookupByLibrary.simpleMessage(
+      "Включить Tailscale",
+    ),
+    "tailscaleEnableDesc": MessageLookupByLibrary.simpleMessage(
+      "Подключаться к tailnet через встроенный узел Tailscale",
+    ),
+    "tailscaleExitNode": MessageLookupByLibrary.simpleMessage("Выходной узел"),
+    "tailscaleExitNodeDesc": MessageLookupByLibrary.simpleMessage(
+      "Имя или IP устройства в tailnet либо auto:any. Нужен для публичных сайтов",
+    ),
+    "tailscaleExitNodeLan": MessageLookupByLibrary.simpleMessage(
+      "Доступ к локальной сети",
+    ),
+    "tailscaleExitNodeLanDesc": MessageLookupByLibrary.simpleMessage(
+      "Оставлять локальную сеть доступной при выходном узле",
+    ),
+    "tailscaleHostname": MessageLookupByLibrary.simpleMessage("Имя устройства"),
+    "tailscaleInvalidDns": MessageLookupByLibrary.simpleMessage(
+      "Формат домен=сервер, где сервер — IP или URL tls:// / https://, например corp.example.com=10.1.0.53",
+    ),
+    "tailscaleInvalidEntry": MessageLookupByLibrary.simpleMessage(
+      "Введите домен, IP или CIDR",
+    ),
+    "tailscaleLoggedIn": MessageLookupByLibrary.simpleMessage(
+      "Вход в Tailscale выполнен",
+    ),
+    "tailscaleLogin": MessageLookupByLibrary.simpleMessage("Войти"),
+    "tailscaleLoginDesc": MessageLookupByLibrary.simpleMessage(
+      "Вход в браузере через SSO/OIDC вашей tailnet, без ключа авторизации",
+    ),
+    "tailscaleLoginNeeded": MessageLookupByLibrary.simpleMessage(
+      "Требуется вход в Tailscale",
+    ),
+    "tailscaleNetwork": MessageLookupByLibrary.simpleMessage("Сеть"),
+    "tailscaleNetworks": MessageLookupByLibrary.simpleMessage("Сети"),
+    "tailscaleReset": MessageLookupByLibrary.simpleMessage("Сбросить узел"),
+    "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(
+      "Удалить данные tailnet этого устройства и подключиться как новое; старое удалите в консоли администратора",
+    ),
+    "tailscaleRoutes": MessageLookupByLibrary.simpleMessage(
+      "Список маршрутизации",
+    ),
+    "tailscaleRoutesDesc": MessageLookupByLibrary.simpleMessage(
+      "Домены и IP/CIDR, идущие через Tailscale в режиме правил. Частным подсетям на ПК нужен TUN",
+    ),
+    "tailscaleStarting": MessageLookupByLibrary.simpleMessage(
+      "Запуск Tailscale…",
+    ),
+    "tailscaleUdp": MessageLookupByLibrary.simpleMessage("UDP"),
+    "tailscaleUdpDesc": MessageLookupByLibrary.simpleMessage(
+      "Передавать UDP-трафик через Tailscale",
+    ),
     "tcpConcurrent": MessageLookupByLibrary.simpleMessage(
       "Параллельные TCP-соединения",
     ),

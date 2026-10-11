@@ -17,8 +17,10 @@ import (
 	"time"
 
 	"github.com/metacubex/mihomo/adapter"
+	"github.com/metacubex/mihomo/adapter/outbound"
 	"github.com/metacubex/mihomo/adapter/outboundgroup"
 	"github.com/metacubex/mihomo/common/observable"
+	"github.com/metacubex/mihomo/common/structure"
 	"github.com/metacubex/mihomo/common/utils"
 	"github.com/metacubex/mihomo/common/yaml"
 	"github.com/metacubex/mihomo/component/age"
@@ -102,6 +104,7 @@ func handleForceGc(forceFreeOSMemory bool) {
 
 func handleShutdown() bool {
 	stopListeners()
+	closeTailscaleProxies()
 	executor.Shutdown()
 	tryUnloadGeoData()
 	handleClearRequests()
@@ -134,8 +137,42 @@ func handleValidateConfig(params *ValidateConfigParams) string {
 	}
 
 	data := patchYamlShortID([]byte(params.Data))
-	_, err := config.Parse(data)
+	rawCfg, err := config.UnmarshalRawConfig(data)
 	if err != nil {
+		return err.Error()
+	}
+	// Building a tailscale proxy registers its DNS client process-wide, which
+	// would replace the live node's; check its options, then use a placeholder.
+	decoder := structure.NewDecoder(structure.Option{TagName: "proxy", WeaklyTypedInput: true, KeyReplacer: structure.DefaultKeyReplacer})
+	stubTailscale := func(proxy map[string]any) (map[string]any, error) {
+		if proxy["type"] != "tailscale" {
+			return proxy, nil
+		}
+		var option outbound.TailscaleOption
+		if err := decoder.Decode(proxy, &option); err != nil {
+			return nil, err
+		}
+		if option.StateDir != "" && !constant.Path.IsSafePath(constant.Path.Resolve(option.StateDir)) {
+			return nil, constant.Path.ErrNotSafePath(option.StateDir)
+		}
+		return map[string]any{"name": proxy["name"], "type": "direct"}, nil
+	}
+	for i, proxy := range rawCfg.Proxy {
+		if rawCfg.Proxy[i], err = stubTailscale(proxy); err != nil {
+			return fmt.Sprintf("proxy %d: %s", i, err)
+		}
+	}
+	for name, provider := range rawCfg.ProxyProvider {
+		payload, _ := provider["payload"].([]any)
+		for i, item := range payload {
+			if proxy, ok := item.(map[string]any); ok {
+				if payload[i], err = stubTailscale(proxy); err != nil {
+					return fmt.Sprintf("proxy provider %s: proxy %d: %s", name, i, err)
+				}
+			}
+		}
+	}
+	if _, err = config.ParseRawConfig(rawCfg); err != nil {
 		return err.Error()
 	}
 	return ""
@@ -529,6 +566,7 @@ func ensureLogSubscriber() {
 	logSubscriber = log.Subscribe()
 	go func() {
 		for logData := range logSubscriber {
+			notifyTailscaleAuth(logData.Payload)
 			if logData.LogLevel < log.Level() {
 				continue
 			}

@@ -36,6 +36,11 @@ type SetupParams struct {
 	SelectedMap     map[string]string `json:"selected-map"`
 	TestURL         string            `json:"test-url"`
 	OverrideTestUrl bool              `json:"override-test-url"`
+	// The app's Tailscale proxy, the domains its tailnet DNS servers resolve,
+	// and node state dirs to delete.
+	TailscaleProxy      string   `json:"tailscale-proxy"`
+	TailscaleDnsDomains []string `json:"tailscale-dns-domains"`
+	ResetTailscaleDirs  []string `json:"reset-tailscale-dirs"`
 }
 
 type UpdateParams struct {
@@ -162,6 +167,8 @@ const (
 	DelayMessage   MessageType = "delay"
 	RequestMessage MessageType = "request"
 	LoadedMessage  MessageType = "loaded"
+	// Data is tsnet's interactive (SSO/OIDC) login URL; "" once login ends.
+	TailscaleAuthMessage MessageType = "tailscaleAuth"
 )
 
 func (message *Message) Json() (string, error) {
