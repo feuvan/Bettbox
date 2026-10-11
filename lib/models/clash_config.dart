@@ -357,10 +357,13 @@ extension TunExt on Tun {
       bool hasFamily(bool v6) => base.any((cidr) => cidr.contains(':') == v6);
       return copyWith(
         autoRoute: true,
-        routeAddress: {
+        // Without forced routes this is exactly the bypass list.
+        routeAddress: [
           ...base,
-          ...forceRouteAddress.where((cidr) => hasFamily(cidr.contains(':'))),
-        }.toList(),
+          ...forceRouteAddress.where(
+            (cidr) => hasFamily(cidr.contains(':')) && !base.contains(cidr),
+          ),
+        ],
       );
     }
 

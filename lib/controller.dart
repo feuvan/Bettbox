@@ -93,8 +93,11 @@ class AppController {
   /// The core keeps macOS TUN routes off connected subnets; re-check them
   /// after a network change, under the lifecycle lock so a stop cannot race.
   Future<void> refreshTunRoutes() => _coreLifecycleLock.synchronized(() async {
+    // Only Tailscale's route carve-outs can collide with a LAN; without them
+    // keep the behaviour unchanged.
     if (_ref.read(runTimeProvider) == null ||
-        !_ref.read(patchClashConfigProvider).tun.enable) {
+        !_ref.read(patchClashConfigProvider).tun.enable ||
+        _ref.read(tailscaleSettingProvider).tunRouteCidrs.isEmpty) {
       return;
     }
     try {
