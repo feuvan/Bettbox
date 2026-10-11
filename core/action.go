@@ -232,6 +232,11 @@ func handleAction(action *Action, result ActionResult) {
 			result.success(value)
 		})
 		return
+	case getTailscaleStatusMethod:
+		handleGetTailscaleStatus(func(value string) {
+			result.success(value)
+		})
+		return
 	case getMemoryMethod:
 		handleGetMemory(func(value string) {
 			result.success(value)

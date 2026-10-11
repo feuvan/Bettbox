@@ -49,9 +49,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m13(count) => "已選擇 ${count} 項";
 
-  static String m14(label) => "${label}必須為 URL";
+  static String m14(online, total) => "${online} / ${total} 在線";
 
-  static String m15(count) => "${Intl.plural(count, other: '年')}";
+  static String m15(label) => "${label}必須為 URL";
+
+  static String m16(count) => "${Intl.plural(count, other: '年')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -929,6 +931,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleAuthKeyDesc": MessageLookupByLibrary.simpleMessage(
       "可選；不填寫時請使用「登入」（SSO/OIDC）",
     ),
+    "tailscaleConnected": MessageLookupByLibrary.simpleMessage("已連線"),
     "tailscaleControlUrl": MessageLookupByLibrary.simpleMessage("控制伺服器"),
     "tailscaleControlUrlDesc": MessageLookupByLibrary.simpleMessage(
       "留空使用 Tailscale 官方伺服器，Headscale 請填寫其位址",
@@ -937,6 +940,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleDesc": MessageLookupByLibrary.simpleMessage(
       "讓指定的網域和 IP 透過 Tailscale 網路存取",
     ),
+    "tailscaleDevices": MessageLookupByLibrary.simpleMessage("裝置"),
     "tailscaleDns": MessageLookupByLibrary.simpleMessage("Tailnet DNS"),
     "tailscaleDnsDesc": MessageLookupByLibrary.simpleMessage(
       "由 tailnet 內 DNS 伺服器解析的網域，格式為 網域=伺服器（如 corp.example.com=10.1.0.53）。請將解析到的網段加入分流清單",
@@ -970,6 +974,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "tailscaleNetwork": MessageLookupByLibrary.simpleMessage("網路"),
     "tailscaleNetworks": MessageLookupByLibrary.simpleMessage("網路清單"),
+    "tailscaleNotStarted": MessageLookupByLibrary.simpleMessage("未啟動"),
+    "tailscaleNotStartedDesc": MessageLookupByLibrary.simpleMessage(
+      "首次使用時啟動，點擊立即啟動",
+    ),
+    "tailscaleOnlineCount": m14,
     "tailscaleReset": MessageLookupByLibrary.simpleMessage("重設節點"),
     "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(
       "清除本裝置的 tailnet 身分並以新裝置加入；舊裝置需在管理後台中刪除",
@@ -981,10 +990,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleStarting": MessageLookupByLibrary.simpleMessage(
       "正在啟動 Tailscale…",
     ),
+    "tailscaleSubnetRoutes": MessageLookupByLibrary.simpleMessage("子網路由"),
+    "tailscaleThisDevice": MessageLookupByLibrary.simpleMessage("本裝置"),
     "tailscaleUdp": MessageLookupByLibrary.simpleMessage("UDP"),
     "tailscaleUdpDesc": MessageLookupByLibrary.simpleMessage(
       "允許 UDP 流量透過 Tailscale",
     ),
+    "tailscaleWarnings": MessageLookupByLibrary.simpleMessage("警告"),
     "tcpConcurrent": MessageLookupByLibrary.simpleMessage("TCP 並發"),
     "tcpConcurrentDesc": MessageLookupByLibrary.simpleMessage("開啟後允許 TCP 併發連接"),
     "testUrl": MessageLookupByLibrary.simpleMessage("測試連結"),
@@ -1072,7 +1084,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "upload": MessageLookupByLibrary.simpleMessage("上傳"),
     "url": MessageLookupByLibrary.simpleMessage("URL"),
     "urlDesc": MessageLookupByLibrary.simpleMessage("透過 URL 獲取設定檔"),
-    "urlTip": m14,
+    "urlTip": m15,
     "useGlobalScriptOverride": MessageLookupByLibrary.simpleMessage(
       "使用全域指令碼覆寫",
     ),
@@ -1108,6 +1120,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "whitelistMode": MessageLookupByLibrary.simpleMessage("白名單模式"),
     "writeToSystem": MessageLookupByLibrary.simpleMessage("寫入系統"),
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage("需要管理員權限"),
-    "years": m15,
+    "years": m16,
   };
 }

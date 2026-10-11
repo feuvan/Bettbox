@@ -67,6 +67,8 @@ mixin ClashInterface {
 
   FutureOr<String> getCoreStatus();
 
+  FutureOr<String> getTailscaleStatus();
+
   FutureOr<void> resetTraffic();
 
   FutureOr<void> startLog();
@@ -479,6 +481,11 @@ abstract class ClashHandlerInterface with ClashInterface {
   @override
   FutureOr<String> getCoreStatus() {
     return invoke<String>(method: ActionMethod.getCoreStatus);
+  }
+
+  @override
+  FutureOr<String> getTailscaleStatus() {
+    return invoke<String>(method: ActionMethod.getTailscaleStatus);
   }
 
   @override

@@ -49,9 +49,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m13(count) => "${count} 件選択中";
 
-  static String m14(label) => "${label} は有効なURLである必要があります";
+  static String m14(online, total) => "${online} / ${total} オンライン";
 
-  static String m15(count) => "${Intl.plural(count, other: '年')}";
+  static String m15(label) => "${label} は有効なURLである必要があります";
+
+  static String m16(count) => "${Intl.plural(count, other: '年')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -1031,6 +1033,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleAuthKeyDesc": MessageLookupByLibrary.simpleMessage(
       "任意。未入力の場合は「ログイン」（SSO/OIDC）を使用",
     ),
+    "tailscaleConnected": MessageLookupByLibrary.simpleMessage("接続済み"),
     "tailscaleControlUrl": MessageLookupByLibrary.simpleMessage("コントロールサーバー"),
     "tailscaleControlUrlDesc": MessageLookupByLibrary.simpleMessage(
       "空欄で Tailscale を使用。Headscale の場合は URL を入力",
@@ -1039,6 +1042,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleDesc": MessageLookupByLibrary.simpleMessage(
       "指定したドメインと IP を tailnet 経由で接続",
     ),
+    "tailscaleDevices": MessageLookupByLibrary.simpleMessage("デバイス"),
     "tailscaleDns": MessageLookupByLibrary.simpleMessage("Tailnet DNS"),
     "tailscaleDnsDesc": MessageLookupByLibrary.simpleMessage(
       "tailnet 内の DNS サーバーで解決するドメイン（ドメイン=サーバー、例: corp.example.com=10.1.0.53）。解決先のサブネットはルーティングリストに追加してください",
@@ -1076,6 +1080,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "tailscaleNetwork": MessageLookupByLibrary.simpleMessage("ネットワーク"),
     "tailscaleNetworks": MessageLookupByLibrary.simpleMessage("ネットワーク一覧"),
+    "tailscaleNotStarted": MessageLookupByLibrary.simpleMessage("未起動"),
+    "tailscaleNotStartedDesc": MessageLookupByLibrary.simpleMessage(
+      "初回使用時に起動します。タップで今すぐ起動",
+    ),
+    "tailscaleOnlineCount": m14,
     "tailscaleReset": MessageLookupByLibrary.simpleMessage("ノードをリセット"),
     "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(
       "このデバイスの tailnet ID を削除して新しいデバイスとして参加します。古いデバイスは管理コンソールで削除してください",
@@ -1087,10 +1096,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleStarting": MessageLookupByLibrary.simpleMessage(
       "Tailscale を起動中…",
     ),
+    "tailscaleSubnetRoutes": MessageLookupByLibrary.simpleMessage("サブネットルート"),
+    "tailscaleThisDevice": MessageLookupByLibrary.simpleMessage("このデバイス"),
     "tailscaleUdp": MessageLookupByLibrary.simpleMessage("UDP"),
     "tailscaleUdpDesc": MessageLookupByLibrary.simpleMessage(
       "UDP 通信を Tailscale 経由で送信",
     ),
+    "tailscaleWarnings": MessageLookupByLibrary.simpleMessage("警告"),
     "tcpConcurrent": MessageLookupByLibrary.simpleMessage("TCP並列接続"),
     "tcpConcurrentDesc": MessageLookupByLibrary.simpleMessage("TCPの同時並列接続を許可"),
     "testUrl": MessageLookupByLibrary.simpleMessage("テストURL"),
@@ -1192,7 +1204,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "upload": MessageLookupByLibrary.simpleMessage("送信"),
     "url": MessageLookupByLibrary.simpleMessage("URL"),
     "urlDesc": MessageLookupByLibrary.simpleMessage("URLから設定を取得"),
-    "urlTip": m14,
+    "urlTip": m15,
     "useGlobalScriptOverride": MessageLookupByLibrary.simpleMessage(
       "グローバルスクリプトオーバーライドを使用",
     ),
@@ -1230,6 +1242,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "whitelistMode": MessageLookupByLibrary.simpleMessage("ホワイトリストモード"),
     "writeToSystem": MessageLookupByLibrary.simpleMessage("システムへ適用"),
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage("管理者権限が必要です"),
-    "years": m15,
+    "years": m16,
   };
 }

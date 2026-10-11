@@ -794,6 +794,86 @@ class AppLocalizations {
     );
   }
 
+  /// `Connected`
+  String get tailscaleConnected {
+    return Intl.message(
+      'Connected',
+      name: 'tailscaleConnected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not started`
+  String get tailscaleNotStarted {
+    return Intl.message(
+      'Not started',
+      name: 'tailscaleNotStarted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Starts on first use; tap to start now`
+  String get tailscaleNotStartedDesc {
+    return Intl.message(
+      'Starts on first use; tap to start now',
+      name: 'tailscaleNotStartedDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This device`
+  String get tailscaleThisDevice {
+    return Intl.message(
+      'This device',
+      name: 'tailscaleThisDevice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subnet routes`
+  String get tailscaleSubnetRoutes {
+    return Intl.message(
+      'Subnet routes',
+      name: 'tailscaleSubnetRoutes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Devices`
+  String get tailscaleDevices {
+    return Intl.message(
+      'Devices',
+      name: 'tailscaleDevices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{online} / {total} online`
+  String tailscaleOnlineCount(Object online, Object total) {
+    return Intl.message(
+      '$online / $total online',
+      name: 'tailscaleOnlineCount',
+      desc: '',
+      args: [online, total],
+    );
+  }
+
+  /// `Warnings`
+  String get tailscaleWarnings {
+    return Intl.message(
+      'Warnings',
+      name: 'tailscaleWarnings',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Disable QUIC`
   String get disableQuic {
     return Intl.message(

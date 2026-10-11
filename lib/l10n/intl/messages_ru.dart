@@ -54,9 +54,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m13(count) => "Выбрано: ${count}";
 
-  static String m14(label) => "${label} должен быть URL";
+  static String m14(online, total) => "${online} / ${total} в сети";
 
-  static String m15(count) =>
+  static String m15(label) => "${label} должен быть URL";
+
+  static String m16(count) =>
       "${Intl.plural(count, one: 'год', few: 'года', many: 'лет', other: 'лет')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -1327,6 +1329,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleAuthKeyDesc": MessageLookupByLibrary.simpleMessage(
       "Необязательно; без ключа используйте «Войти» (SSO/OIDC)",
     ),
+    "tailscaleConnected": MessageLookupByLibrary.simpleMessage("Подключено"),
     "tailscaleControlUrl": MessageLookupByLibrary.simpleMessage(
       "Сервер управления",
     ),
@@ -1339,6 +1342,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleDesc": MessageLookupByLibrary.simpleMessage(
       "Направлять выбранные домены и IP через tailnet",
     ),
+    "tailscaleDevices": MessageLookupByLibrary.simpleMessage("Устройства"),
     "tailscaleDns": MessageLookupByLibrary.simpleMessage("DNS tailnet"),
     "tailscaleDnsDesc": MessageLookupByLibrary.simpleMessage(
       "Домены, которые разрешает DNS-сервер внутри tailnet: домен=сервер (например, corp.example.com=10.1.0.53). Добавьте их подсети в список маршрутизации",
@@ -1378,6 +1382,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "tailscaleNetwork": MessageLookupByLibrary.simpleMessage("Сеть"),
     "tailscaleNetworks": MessageLookupByLibrary.simpleMessage("Сети"),
+    "tailscaleNotStarted": MessageLookupByLibrary.simpleMessage("Не запущено"),
+    "tailscaleNotStartedDesc": MessageLookupByLibrary.simpleMessage(
+      "Запускается при первом использовании; нажмите, чтобы запустить",
+    ),
+    "tailscaleOnlineCount": m14,
     "tailscaleReset": MessageLookupByLibrary.simpleMessage("Сбросить узел"),
     "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(
       "Удалить данные tailnet этого устройства и подключиться как новое; старое удалите в консоли администратора",
@@ -1391,10 +1400,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleStarting": MessageLookupByLibrary.simpleMessage(
       "Запуск Tailscale…",
     ),
+    "tailscaleSubnetRoutes": MessageLookupByLibrary.simpleMessage(
+      "Маршруты подсетей",
+    ),
+    "tailscaleThisDevice": MessageLookupByLibrary.simpleMessage(
+      "Это устройство",
+    ),
     "tailscaleUdp": MessageLookupByLibrary.simpleMessage("UDP"),
     "tailscaleUdpDesc": MessageLookupByLibrary.simpleMessage(
       "Передавать UDP-трафик через Tailscale",
     ),
+    "tailscaleWarnings": MessageLookupByLibrary.simpleMessage("Предупреждения"),
     "tcpConcurrent": MessageLookupByLibrary.simpleMessage(
       "Параллельные TCP-соединения",
     ),
@@ -1528,7 +1544,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "upload": MessageLookupByLibrary.simpleMessage("Отправка"),
     "url": MessageLookupByLibrary.simpleMessage("URL"),
     "urlDesc": MessageLookupByLibrary.simpleMessage("Получить профиль по URL"),
-    "urlTip": m14,
+    "urlTip": m15,
     "useGlobalScriptOverride": MessageLookupByLibrary.simpleMessage(
       "Глобальное переопределение",
     ),
@@ -1580,6 +1596,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage(
       "Требуются права администратора",
     ),
-    "years": m15,
+    "years": m16,
   };
 }

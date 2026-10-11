@@ -4245,6 +4245,634 @@ as ResultType,
 
 
 /// @nodoc
+mixin _$TailscalePeer {
+
+ String get name; String get dnsName; String get os; List<String> get ips;// Subnet routes this device serves.
+ List<String> get routes; bool get online;// The exit node in use.
+ bool get exitNode; bool get exitNodeOption; bool get direct;// DERP region relaying the traffic when not direct.
+ String get relay; int get rxBytes; int get txBytes;
+/// Create a copy of TailscalePeer
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$TailscalePeerCopyWith<TailscalePeer> get copyWith => _$TailscalePeerCopyWithImpl<TailscalePeer>(this as TailscalePeer, _$identity);
+
+  /// Serializes this TailscalePeer to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TailscalePeer&&(identical(other.name, name) || other.name == name)&&(identical(other.dnsName, dnsName) || other.dnsName == dnsName)&&(identical(other.os, os) || other.os == os)&&const DeepCollectionEquality().equals(other.ips, ips)&&const DeepCollectionEquality().equals(other.routes, routes)&&(identical(other.online, online) || other.online == online)&&(identical(other.exitNode, exitNode) || other.exitNode == exitNode)&&(identical(other.exitNodeOption, exitNodeOption) || other.exitNodeOption == exitNodeOption)&&(identical(other.direct, direct) || other.direct == direct)&&(identical(other.relay, relay) || other.relay == relay)&&(identical(other.rxBytes, rxBytes) || other.rxBytes == rxBytes)&&(identical(other.txBytes, txBytes) || other.txBytes == txBytes));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,name,dnsName,os,const DeepCollectionEquality().hash(ips),const DeepCollectionEquality().hash(routes),online,exitNode,exitNodeOption,direct,relay,rxBytes,txBytes);
+
+@override
+String toString() {
+  return 'TailscalePeer(name: $name, dnsName: $dnsName, os: $os, ips: $ips, routes: $routes, online: $online, exitNode: $exitNode, exitNodeOption: $exitNodeOption, direct: $direct, relay: $relay, rxBytes: $rxBytes, txBytes: $txBytes)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $TailscalePeerCopyWith<$Res>  {
+  factory $TailscalePeerCopyWith(TailscalePeer value, $Res Function(TailscalePeer) _then) = _$TailscalePeerCopyWithImpl;
+@useResult
+$Res call({
+ String name, String dnsName, String os, List<String> ips, List<String> routes, bool online, bool exitNode, bool exitNodeOption, bool direct, String relay, int rxBytes, int txBytes
+});
+
+
+
+
+}
+/// @nodoc
+class _$TailscalePeerCopyWithImpl<$Res>
+    implements $TailscalePeerCopyWith<$Res> {
+  _$TailscalePeerCopyWithImpl(this._self, this._then);
+
+  final TailscalePeer _self;
+  final $Res Function(TailscalePeer) _then;
+
+/// Create a copy of TailscalePeer
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? dnsName = null,Object? os = null,Object? ips = null,Object? routes = null,Object? online = null,Object? exitNode = null,Object? exitNodeOption = null,Object? direct = null,Object? relay = null,Object? rxBytes = null,Object? txBytes = null,}) {
+  return _then(_self.copyWith(
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,dnsName: null == dnsName ? _self.dnsName : dnsName // ignore: cast_nullable_to_non_nullable
+as String,os: null == os ? _self.os : os // ignore: cast_nullable_to_non_nullable
+as String,ips: null == ips ? _self.ips : ips // ignore: cast_nullable_to_non_nullable
+as List<String>,routes: null == routes ? _self.routes : routes // ignore: cast_nullable_to_non_nullable
+as List<String>,online: null == online ? _self.online : online // ignore: cast_nullable_to_non_nullable
+as bool,exitNode: null == exitNode ? _self.exitNode : exitNode // ignore: cast_nullable_to_non_nullable
+as bool,exitNodeOption: null == exitNodeOption ? _self.exitNodeOption : exitNodeOption // ignore: cast_nullable_to_non_nullable
+as bool,direct: null == direct ? _self.direct : direct // ignore: cast_nullable_to_non_nullable
+as bool,relay: null == relay ? _self.relay : relay // ignore: cast_nullable_to_non_nullable
+as String,rxBytes: null == rxBytes ? _self.rxBytes : rxBytes // ignore: cast_nullable_to_non_nullable
+as int,txBytes: null == txBytes ? _self.txBytes : txBytes // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [TailscalePeer].
+extension TailscalePeerPatterns on TailscalePeer {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _TailscalePeer value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _TailscalePeer() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _TailscalePeer value)  $default,){
+final _that = this;
+switch (_that) {
+case _TailscalePeer():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _TailscalePeer value)?  $default,){
+final _that = this;
+switch (_that) {
+case _TailscalePeer() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String dnsName,  String os,  List<String> ips,  List<String> routes,  bool online,  bool exitNode,  bool exitNodeOption,  bool direct,  String relay,  int rxBytes,  int txBytes)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _TailscalePeer() when $default != null:
+return $default(_that.name,_that.dnsName,_that.os,_that.ips,_that.routes,_that.online,_that.exitNode,_that.exitNodeOption,_that.direct,_that.relay,_that.rxBytes,_that.txBytes);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String dnsName,  String os,  List<String> ips,  List<String> routes,  bool online,  bool exitNode,  bool exitNodeOption,  bool direct,  String relay,  int rxBytes,  int txBytes)  $default,) {final _that = this;
+switch (_that) {
+case _TailscalePeer():
+return $default(_that.name,_that.dnsName,_that.os,_that.ips,_that.routes,_that.online,_that.exitNode,_that.exitNodeOption,_that.direct,_that.relay,_that.rxBytes,_that.txBytes);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String dnsName,  String os,  List<String> ips,  List<String> routes,  bool online,  bool exitNode,  bool exitNodeOption,  bool direct,  String relay,  int rxBytes,  int txBytes)?  $default,) {final _that = this;
+switch (_that) {
+case _TailscalePeer() when $default != null:
+return $default(_that.name,_that.dnsName,_that.os,_that.ips,_that.routes,_that.online,_that.exitNode,_that.exitNodeOption,_that.direct,_that.relay,_that.rxBytes,_that.txBytes);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _TailscalePeer implements TailscalePeer {
+  const _TailscalePeer({this.name = '', this.dnsName = '', this.os = '', final  List<String> ips = const [], final  List<String> routes = const [], this.online = false, this.exitNode = false, this.exitNodeOption = false, this.direct = false, this.relay = '', this.rxBytes = 0, this.txBytes = 0}): _ips = ips,_routes = routes;
+  factory _TailscalePeer.fromJson(Map<String, dynamic> json) => _$TailscalePeerFromJson(json);
+
+@override@JsonKey() final  String name;
+@override@JsonKey() final  String dnsName;
+@override@JsonKey() final  String os;
+ final  List<String> _ips;
+@override@JsonKey() List<String> get ips {
+  if (_ips is EqualUnmodifiableListView) return _ips;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_ips);
+}
+
+// Subnet routes this device serves.
+ final  List<String> _routes;
+// Subnet routes this device serves.
+@override@JsonKey() List<String> get routes {
+  if (_routes is EqualUnmodifiableListView) return _routes;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_routes);
+}
+
+@override@JsonKey() final  bool online;
+// The exit node in use.
+@override@JsonKey() final  bool exitNode;
+@override@JsonKey() final  bool exitNodeOption;
+@override@JsonKey() final  bool direct;
+// DERP region relaying the traffic when not direct.
+@override@JsonKey() final  String relay;
+@override@JsonKey() final  int rxBytes;
+@override@JsonKey() final  int txBytes;
+
+/// Create a copy of TailscalePeer
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$TailscalePeerCopyWith<_TailscalePeer> get copyWith => __$TailscalePeerCopyWithImpl<_TailscalePeer>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$TailscalePeerToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TailscalePeer&&(identical(other.name, name) || other.name == name)&&(identical(other.dnsName, dnsName) || other.dnsName == dnsName)&&(identical(other.os, os) || other.os == os)&&const DeepCollectionEquality().equals(other._ips, _ips)&&const DeepCollectionEquality().equals(other._routes, _routes)&&(identical(other.online, online) || other.online == online)&&(identical(other.exitNode, exitNode) || other.exitNode == exitNode)&&(identical(other.exitNodeOption, exitNodeOption) || other.exitNodeOption == exitNodeOption)&&(identical(other.direct, direct) || other.direct == direct)&&(identical(other.relay, relay) || other.relay == relay)&&(identical(other.rxBytes, rxBytes) || other.rxBytes == rxBytes)&&(identical(other.txBytes, txBytes) || other.txBytes == txBytes));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,name,dnsName,os,const DeepCollectionEquality().hash(_ips),const DeepCollectionEquality().hash(_routes),online,exitNode,exitNodeOption,direct,relay,rxBytes,txBytes);
+
+@override
+String toString() {
+  return 'TailscalePeer(name: $name, dnsName: $dnsName, os: $os, ips: $ips, routes: $routes, online: $online, exitNode: $exitNode, exitNodeOption: $exitNodeOption, direct: $direct, relay: $relay, rxBytes: $rxBytes, txBytes: $txBytes)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$TailscalePeerCopyWith<$Res> implements $TailscalePeerCopyWith<$Res> {
+  factory _$TailscalePeerCopyWith(_TailscalePeer value, $Res Function(_TailscalePeer) _then) = __$TailscalePeerCopyWithImpl;
+@override @useResult
+$Res call({
+ String name, String dnsName, String os, List<String> ips, List<String> routes, bool online, bool exitNode, bool exitNodeOption, bool direct, String relay, int rxBytes, int txBytes
+});
+
+
+
+
+}
+/// @nodoc
+class __$TailscalePeerCopyWithImpl<$Res>
+    implements _$TailscalePeerCopyWith<$Res> {
+  __$TailscalePeerCopyWithImpl(this._self, this._then);
+
+  final _TailscalePeer _self;
+  final $Res Function(_TailscalePeer) _then;
+
+/// Create a copy of TailscalePeer
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? dnsName = null,Object? os = null,Object? ips = null,Object? routes = null,Object? online = null,Object? exitNode = null,Object? exitNodeOption = null,Object? direct = null,Object? relay = null,Object? rxBytes = null,Object? txBytes = null,}) {
+  return _then(_TailscalePeer(
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,dnsName: null == dnsName ? _self.dnsName : dnsName // ignore: cast_nullable_to_non_nullable
+as String,os: null == os ? _self.os : os // ignore: cast_nullable_to_non_nullable
+as String,ips: null == ips ? _self._ips : ips // ignore: cast_nullable_to_non_nullable
+as List<String>,routes: null == routes ? _self._routes : routes // ignore: cast_nullable_to_non_nullable
+as List<String>,online: null == online ? _self.online : online // ignore: cast_nullable_to_non_nullable
+as bool,exitNode: null == exitNode ? _self.exitNode : exitNode // ignore: cast_nullable_to_non_nullable
+as bool,exitNodeOption: null == exitNodeOption ? _self.exitNodeOption : exitNodeOption // ignore: cast_nullable_to_non_nullable
+as bool,direct: null == direct ? _self.direct : direct // ignore: cast_nullable_to_non_nullable
+as bool,relay: null == relay ? _self.relay : relay // ignore: cast_nullable_to_non_nullable
+as String,rxBytes: null == rxBytes ? _self.rxBytes : rxBytes // ignore: cast_nullable_to_non_nullable
+as int,txBytes: null == txBytes ? _self.txBytes : txBytes // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$TailscaleStatus {
+
+// tsnet backend state (Running, NeedsLogin, ...), NotStarted or Error.
+ String get state; String get tailnet; TailscalePeer? get self; List<TailscalePeer> get peers; List<String> get health;
+/// Create a copy of TailscaleStatus
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$TailscaleStatusCopyWith<TailscaleStatus> get copyWith => _$TailscaleStatusCopyWithImpl<TailscaleStatus>(this as TailscaleStatus, _$identity);
+
+  /// Serializes this TailscaleStatus to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TailscaleStatus&&(identical(other.state, state) || other.state == state)&&(identical(other.tailnet, tailnet) || other.tailnet == tailnet)&&(identical(other.self, self) || other.self == self)&&const DeepCollectionEquality().equals(other.peers, peers)&&const DeepCollectionEquality().equals(other.health, health));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,state,tailnet,self,const DeepCollectionEquality().hash(peers),const DeepCollectionEquality().hash(health));
+
+@override
+String toString() {
+  return 'TailscaleStatus(state: $state, tailnet: $tailnet, self: $self, peers: $peers, health: $health)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $TailscaleStatusCopyWith<$Res>  {
+  factory $TailscaleStatusCopyWith(TailscaleStatus value, $Res Function(TailscaleStatus) _then) = _$TailscaleStatusCopyWithImpl;
+@useResult
+$Res call({
+ String state, String tailnet, TailscalePeer? self, List<TailscalePeer> peers, List<String> health
+});
+
+
+$TailscalePeerCopyWith<$Res>? get self;
+
+}
+/// @nodoc
+class _$TailscaleStatusCopyWithImpl<$Res>
+    implements $TailscaleStatusCopyWith<$Res> {
+  _$TailscaleStatusCopyWithImpl(this._self, this._then);
+
+  final TailscaleStatus _self;
+  final $Res Function(TailscaleStatus) _then;
+
+/// Create a copy of TailscaleStatus
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? state = null,Object? tailnet = null,Object? self = freezed,Object? peers = null,Object? health = null,}) {
+  return _then(_self.copyWith(
+state: null == state ? _self.state : state // ignore: cast_nullable_to_non_nullable
+as String,tailnet: null == tailnet ? _self.tailnet : tailnet // ignore: cast_nullable_to_non_nullable
+as String,self: freezed == self ? _self.self : self // ignore: cast_nullable_to_non_nullable
+as TailscalePeer?,peers: null == peers ? _self.peers : peers // ignore: cast_nullable_to_non_nullable
+as List<TailscalePeer>,health: null == health ? _self.health : health // ignore: cast_nullable_to_non_nullable
+as List<String>,
+  ));
+}
+/// Create a copy of TailscaleStatus
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TailscalePeerCopyWith<$Res>? get self {
+    if (_self.self == null) {
+    return null;
+  }
+
+  return $TailscalePeerCopyWith<$Res>(_self.self!, (value) {
+    return _then(_self.copyWith(self: value));
+  });
+}
+}
+
+
+/// Adds pattern-matching-related methods to [TailscaleStatus].
+extension TailscaleStatusPatterns on TailscaleStatus {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _TailscaleStatus value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _TailscaleStatus() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _TailscaleStatus value)  $default,){
+final _that = this;
+switch (_that) {
+case _TailscaleStatus():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _TailscaleStatus value)?  $default,){
+final _that = this;
+switch (_that) {
+case _TailscaleStatus() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String state,  String tailnet,  TailscalePeer? self,  List<TailscalePeer> peers,  List<String> health)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _TailscaleStatus() when $default != null:
+return $default(_that.state,_that.tailnet,_that.self,_that.peers,_that.health);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String state,  String tailnet,  TailscalePeer? self,  List<TailscalePeer> peers,  List<String> health)  $default,) {final _that = this;
+switch (_that) {
+case _TailscaleStatus():
+return $default(_that.state,_that.tailnet,_that.self,_that.peers,_that.health);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String state,  String tailnet,  TailscalePeer? self,  List<TailscalePeer> peers,  List<String> health)?  $default,) {final _that = this;
+switch (_that) {
+case _TailscaleStatus() when $default != null:
+return $default(_that.state,_that.tailnet,_that.self,_that.peers,_that.health);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _TailscaleStatus implements TailscaleStatus {
+  const _TailscaleStatus({this.state = '', this.tailnet = '', this.self, final  List<TailscalePeer> peers = const [], final  List<String> health = const []}): _peers = peers,_health = health;
+  factory _TailscaleStatus.fromJson(Map<String, dynamic> json) => _$TailscaleStatusFromJson(json);
+
+// tsnet backend state (Running, NeedsLogin, ...), NotStarted or Error.
+@override@JsonKey() final  String state;
+@override@JsonKey() final  String tailnet;
+@override final  TailscalePeer? self;
+ final  List<TailscalePeer> _peers;
+@override@JsonKey() List<TailscalePeer> get peers {
+  if (_peers is EqualUnmodifiableListView) return _peers;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_peers);
+}
+
+ final  List<String> _health;
+@override@JsonKey() List<String> get health {
+  if (_health is EqualUnmodifiableListView) return _health;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_health);
+}
+
+
+/// Create a copy of TailscaleStatus
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$TailscaleStatusCopyWith<_TailscaleStatus> get copyWith => __$TailscaleStatusCopyWithImpl<_TailscaleStatus>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$TailscaleStatusToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TailscaleStatus&&(identical(other.state, state) || other.state == state)&&(identical(other.tailnet, tailnet) || other.tailnet == tailnet)&&(identical(other.self, self) || other.self == self)&&const DeepCollectionEquality().equals(other._peers, _peers)&&const DeepCollectionEquality().equals(other._health, _health));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,state,tailnet,self,const DeepCollectionEquality().hash(_peers),const DeepCollectionEquality().hash(_health));
+
+@override
+String toString() {
+  return 'TailscaleStatus(state: $state, tailnet: $tailnet, self: $self, peers: $peers, health: $health)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$TailscaleStatusCopyWith<$Res> implements $TailscaleStatusCopyWith<$Res> {
+  factory _$TailscaleStatusCopyWith(_TailscaleStatus value, $Res Function(_TailscaleStatus) _then) = __$TailscaleStatusCopyWithImpl;
+@override @useResult
+$Res call({
+ String state, String tailnet, TailscalePeer? self, List<TailscalePeer> peers, List<String> health
+});
+
+
+@override $TailscalePeerCopyWith<$Res>? get self;
+
+}
+/// @nodoc
+class __$TailscaleStatusCopyWithImpl<$Res>
+    implements _$TailscaleStatusCopyWith<$Res> {
+  __$TailscaleStatusCopyWithImpl(this._self, this._then);
+
+  final _TailscaleStatus _self;
+  final $Res Function(_TailscaleStatus) _then;
+
+/// Create a copy of TailscaleStatus
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? state = null,Object? tailnet = null,Object? self = freezed,Object? peers = null,Object? health = null,}) {
+  return _then(_TailscaleStatus(
+state: null == state ? _self.state : state // ignore: cast_nullable_to_non_nullable
+as String,tailnet: null == tailnet ? _self.tailnet : tailnet // ignore: cast_nullable_to_non_nullable
+as String,self: freezed == self ? _self.self : self // ignore: cast_nullable_to_non_nullable
+as TailscalePeer?,peers: null == peers ? _self._peers : peers // ignore: cast_nullable_to_non_nullable
+as List<TailscalePeer>,health: null == health ? _self._health : health // ignore: cast_nullable_to_non_nullable
+as List<String>,
+  ));
+}
+
+/// Create a copy of TailscaleStatus
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TailscalePeerCopyWith<$Res>? get self {
+    if (_self.self == null) {
+    return null;
+  }
+
+  return $TailscalePeerCopyWith<$Res>(_self.self!, (value) {
+    return _then(_self.copyWith(self: value));
+  });
+}
+}
+
+
+/// @nodoc
 mixin _$CoreStatus {
 
  int get physical;@JsonKey(name: 'in-use') int get inUse; int get reclaimable; int get goroutines;@JsonKey(name: 'heap-objects') int get heapObjects;@JsonKey(name: 'last-gc') int get lastGC; int get rules; int get proxies;@JsonKey(name: 'proxy-groups') int get proxyGroups;@JsonKey(name: 'rule-providers') int get ruleProviders;@JsonKey(name: 'proxy-providers') int get proxyProviders;@JsonKey(name: 'geodata-use') String get geodataUse;

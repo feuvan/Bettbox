@@ -363,6 +363,15 @@ class ClashCore {
     return CoreStatus.fromJson(Map<String, dynamic>.from(decoded));
   }
 
+  /// Status of the app's Tailscale node; null when none is configured.
+  Future<TailscaleStatus?> getTailscaleStatus() async {
+    final value = await clashInterface.getTailscaleStatus();
+    if (value.isEmpty) return null;
+    final decoded = json.decode(value);
+    if (decoded is! Map) return null;
+    return TailscaleStatus.fromJson(Map<String, dynamic>.from(decoded));
+  }
+
   void resetTraffic() {
     clashInterface.resetTraffic();
   }

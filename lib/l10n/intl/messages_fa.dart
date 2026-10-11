@@ -50,9 +50,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m13(count) => "${count} مورد انتخاب شده";
 
-  static String m14(label) => "${label} باید یک URL معتبر باشد";
+  static String m14(online, total) => "${online} / ${total} آنلاین";
 
-  static String m15(count) => "${Intl.plural(count, other: '# سال')}";
+  static String m15(label) => "${label} باید یک URL معتبر باشد";
+
+  static String m16(count) => "${Intl.plural(count, other: '# سال')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -1310,6 +1312,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleAuthKeyDesc": MessageLookupByLibrary.simpleMessage(
       "اختیاری؛ بدون آن از «ورود» (SSO/OIDC) استفاده کنید",
     ),
+    "tailscaleConnected": MessageLookupByLibrary.simpleMessage("متصل"),
     "tailscaleControlUrl": MessageLookupByLibrary.simpleMessage("سرور کنترل"),
     "tailscaleControlUrlDesc": MessageLookupByLibrary.simpleMessage(
       "خالی یعنی Tailscale. برای Headscale نشانی URL را وارد کنید",
@@ -1318,6 +1321,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleDesc": MessageLookupByLibrary.simpleMessage(
       "ارسال دامنه‌ها و IPهای انتخابی از طریق tailnet",
     ),
+    "tailscaleDevices": MessageLookupByLibrary.simpleMessage("دستگاه‌ها"),
     "tailscaleDns": MessageLookupByLibrary.simpleMessage("DNS شبکه tailnet"),
     "tailscaleDnsDesc": MessageLookupByLibrary.simpleMessage(
       "دامنه‌هایی که سرور DNS داخل tailnet آن‌ها را resolve می‌کند: دامنه=سرور (مثلاً corp.example.com=10.1.0.53). زیرشبکه‌های مقصد را به فهرست مسیریابی اضافه کنید",
@@ -1357,6 +1361,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "tailscaleNetwork": MessageLookupByLibrary.simpleMessage("شبکه"),
     "tailscaleNetworks": MessageLookupByLibrary.simpleMessage("شبکه‌ها"),
+    "tailscaleNotStarted": MessageLookupByLibrary.simpleMessage(
+      "راه‌اندازی نشده",
+    ),
+    "tailscaleNotStartedDesc": MessageLookupByLibrary.simpleMessage(
+      "در اولین استفاده راه‌اندازی می‌شود؛ برای راه‌اندازی ضربه بزنید",
+    ),
+    "tailscaleOnlineCount": m14,
     "tailscaleReset": MessageLookupByLibrary.simpleMessage("بازنشانی گره"),
     "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(
       "حذف هویت tailnet این دستگاه و پیوستن به‌عنوان دستگاه جدید؛ دستگاه قبلی را در کنسول مدیریت حذف کنید",
@@ -1368,10 +1379,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleStarting": MessageLookupByLibrary.simpleMessage(
       "در حال راه‌اندازی Tailscale…",
     ),
+    "tailscaleSubnetRoutes": MessageLookupByLibrary.simpleMessage(
+      "مسیرهای زیرشبکه",
+    ),
+    "tailscaleThisDevice": MessageLookupByLibrary.simpleMessage("این دستگاه"),
     "tailscaleUdp": MessageLookupByLibrary.simpleMessage("UDP"),
     "tailscaleUdpDesc": MessageLookupByLibrary.simpleMessage(
       "ارسال ترافیک UDP از طریق Tailscale",
     ),
+    "tailscaleWarnings": MessageLookupByLibrary.simpleMessage("هشدارها"),
     "tcpConcurrent": MessageLookupByLibrary.simpleMessage("اتصال همزمان TCP"),
     "tcpConcurrentDesc": MessageLookupByLibrary.simpleMessage(
       "اجازه به اتصال‌های همزمان TCP",
@@ -1497,7 +1513,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "urlDesc": MessageLookupByLibrary.simpleMessage(
       "دریافت پروفایل از طریق آدرس URL",
     ),
-    "urlTip": m14,
+    "urlTip": m15,
     "useGlobalScriptOverride": MessageLookupByLibrary.simpleMessage(
       "استفاده از اسکریپت اورراید سراسری",
     ),
@@ -1545,6 +1561,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage(
       "نیازمند دسترسی مدیریت (Admin)",
     ),
-    "years": m15,
+    "years": m16,
   };
 }

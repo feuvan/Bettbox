@@ -49,9 +49,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m13(count) => "${count}개 선택됨";
 
-  static String m14(label) => "${label} 항목은 올바른 URL이어야 합니다";
+  static String m14(online, total) => "${online} / ${total} 온라인";
 
-  static String m15(count) => "${Intl.plural(count, other: '#년')}";
+  static String m15(label) => "${label} 항목은 올바른 URL이어야 합니다";
+
+  static String m16(count) => "${Intl.plural(count, other: '#년')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -1029,6 +1031,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleAuthKeyDesc": MessageLookupByLibrary.simpleMessage(
       "선택 사항. 없으면 \'로그인\'(SSO/OIDC)을 사용하세요",
     ),
+    "tailscaleConnected": MessageLookupByLibrary.simpleMessage("연결됨"),
     "tailscaleControlUrl": MessageLookupByLibrary.simpleMessage("제어 서버"),
     "tailscaleControlUrlDesc": MessageLookupByLibrary.simpleMessage(
       "비워 두면 Tailscale을 사용합니다. Headscale은 URL을 입력하세요",
@@ -1037,6 +1040,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleDesc": MessageLookupByLibrary.simpleMessage(
       "지정한 도메인과 IP를 tailnet을 통해 연결",
     ),
+    "tailscaleDevices": MessageLookupByLibrary.simpleMessage("기기"),
     "tailscaleDns": MessageLookupByLibrary.simpleMessage("Tailnet DNS"),
     "tailscaleDnsDesc": MessageLookupByLibrary.simpleMessage(
       "tailnet 내부 DNS 서버로 해석할 도메인 (도메인=서버, 예: corp.example.com=10.1.0.53). 해석되는 서브넷은 라우팅 목록에 추가하세요",
@@ -1072,6 +1076,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "tailscaleNetwork": MessageLookupByLibrary.simpleMessage("네트워크"),
     "tailscaleNetworks": MessageLookupByLibrary.simpleMessage("네트워크 목록"),
+    "tailscaleNotStarted": MessageLookupByLibrary.simpleMessage("시작 안 됨"),
+    "tailscaleNotStartedDesc": MessageLookupByLibrary.simpleMessage(
+      "처음 사용할 때 시작됩니다. 탭하면 지금 시작",
+    ),
+    "tailscaleOnlineCount": m14,
     "tailscaleReset": MessageLookupByLibrary.simpleMessage("노드 초기화"),
     "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(
       "이 기기의 tailnet ID를 삭제하고 새 기기로 참여합니다. 이전 기기는 관리 콘솔에서 삭제하세요",
@@ -1083,10 +1092,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleStarting": MessageLookupByLibrary.simpleMessage(
       "Tailscale 시작 중…",
     ),
+    "tailscaleSubnetRoutes": MessageLookupByLibrary.simpleMessage("서브넷 경로"),
+    "tailscaleThisDevice": MessageLookupByLibrary.simpleMessage("이 기기"),
     "tailscaleUdp": MessageLookupByLibrary.simpleMessage("UDP"),
     "tailscaleUdpDesc": MessageLookupByLibrary.simpleMessage(
       "UDP 트래픽을 Tailscale로 전송",
     ),
+    "tailscaleWarnings": MessageLookupByLibrary.simpleMessage("경고"),
     "tcpConcurrent": MessageLookupByLibrary.simpleMessage("TCP 동시 연결"),
     "tcpConcurrentDesc": MessageLookupByLibrary.simpleMessage(
       "TCP 동시 다중 연결 허용",
@@ -1192,7 +1204,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "upload": MessageLookupByLibrary.simpleMessage("업로드"),
     "url": MessageLookupByLibrary.simpleMessage("URL"),
     "urlDesc": MessageLookupByLibrary.simpleMessage("URL 주소로 프로필 가져오기"),
-    "urlTip": m14,
+    "urlTip": m15,
     "useGlobalScriptOverride": MessageLookupByLibrary.simpleMessage(
       "글로벌 스크립트 오버라이드 사용",
     ),
@@ -1230,6 +1242,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "whitelistMode": MessageLookupByLibrary.simpleMessage("화이트리스트 모드"),
     "writeToSystem": MessageLookupByLibrary.simpleMessage("시스템 적용"),
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage("관리자 권한이 필요합니다"),
-    "years": m15,
+    "years": m16,
   };
 }

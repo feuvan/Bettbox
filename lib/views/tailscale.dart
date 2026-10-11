@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bett_box/clash/clash.dart';
 import 'package:bett_box/common/common.dart';
 import 'package:bett_box/models/models.dart';
@@ -7,6 +9,7 @@ import 'package:bett_box/views/config/network.dart';
 import 'package:bett_box/widgets/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Saves [builder]'s result; re-applies the profile when the running node
@@ -53,6 +56,19 @@ Future<void> _resetNode(WidgetRef ref, TailscaleNetwork network) async {
     ref.read(tailscaleAuthUrlProvider.notifier).value = null;
   }
   await globalState.appController.applyProfile(silence: true);
+}
+
+/// Any dial starts the node (no-op if running); a login URL then arrives as
+/// a tailscaleAuth message (ClashManager.onTailscaleAuth).
+void _startNode(WidgetRef ref) {
+  final name = globalState.tailscaleName;
+  if (name == null) return;
+  clashCore.getDelay(ref.read(appSettingProvider).testUrl, name).ignore();
+}
+
+void _copy(BuildContext context, String text) {
+  Clipboard.setData(ClipboardData(text: text));
+  context.showSnackBar(appLocalizations.copySuccess);
 }
 
 String? _notEmpty(String? value) => value == null || value.trim().isEmpty
@@ -133,18 +149,13 @@ class TailscaleView extends ConsumerWidget {
                 } else {
                   globalState.showNotifier(appLocalizations.tailscaleStarting);
                 }
-                // Any dial starts the node (no-op if running); a new login
-                // URL arrives as a tailscaleAuth message
-                // (ClashManager.onTailscaleAuth).
-                final name = globalState.tailscaleName;
-                if (name == null) return;
-                clashCore
-                    .getDelay(ref.read(appSettingProvider).testUrl, name)
-                    .ignore();
+                _startNode(ref);
               },
             ),
         ],
       ),
+      if (props.enable && active != null)
+        _StatusSection(key: ValueKey(active.id)),
       ...generateSection(
         title: appLocalizations.tailscaleNetworks,
         items: [
@@ -435,6 +446,161 @@ class _EntriesItem extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+/// Live status of the running node, refreshed while the page is open.
+class _StatusSection extends ConsumerStatefulWidget {
+  const _StatusSection({super.key});
+
+  @override
+  ConsumerState<_StatusSection> createState() => _StatusSectionState();
+}
+
+class _StatusSectionState extends ConsumerState<_StatusSection> {
+  TailscaleStatus? _status;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _refresh();
+    _timer = Timer.periodic(const Duration(seconds: 3), (_) => _refresh());
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _refresh() async {
+    final status = await clashCore.getTailscaleStatus().catchError((_) => null);
+    if (mounted) setState(() => _status = status);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final status = _status;
+    if (status == null) return const SizedBox.shrink();
+    final self = status.self;
+    final peers = status.peers;
+    final exitNode = peers.where((p) => p.exitNode).firstOrNull;
+    final routes = [
+      for (final peer in peers)
+        for (final route in peer.routes) '$route · ${peer.name}',
+    ];
+    final notStarted = status.state == 'NotStarted';
+    final state = switch (status.state) {
+      'Running' => appLocalizations.tailscaleConnected,
+      'NeedsLogin' ||
+      'NeedsMachineAuth' => appLocalizations.tailscaleLoginNeeded,
+      'Starting' || 'NoState' => appLocalizations.tailscaleStarting,
+      'NotStarted' => appLocalizations.tailscaleNotStarted,
+      'Error' => status.health.firstOrNull ?? status.state,
+      final other => other,
+    };
+
+    return generateSection(
+      title: appLocalizations.status,
+      items: [
+        ListItem(
+          title: Text(state),
+          subtitle: notStarted
+              ? Text(appLocalizations.tailscaleNotStartedDesc)
+              : status.tailnet.isNotEmpty
+              ? Text(status.tailnet)
+              : null,
+          onTap: notStarted ? () => _startNode(ref) : null,
+        ),
+        if (self != null && self.ips.isNotEmpty)
+          ListItem(
+            title: Text(appLocalizations.tailscaleThisDevice),
+            subtitle: Text(
+              [
+                if (self.dnsName.isNotEmpty) self.dnsName,
+                self.ips.join('  '),
+              ].join('\n'),
+            ),
+            onTap: () => _copy(context, self.ips.first),
+          ),
+        if (exitNode != null)
+          ListItem(
+            title: Text(appLocalizations.tailscaleExitNode),
+            subtitle: Text(
+              [exitNode.name, ...exitNode.ips.take(1)].join(' · '),
+            ),
+          ),
+        if (routes.isNotEmpty)
+          ListItem(
+            title: Text(appLocalizations.tailscaleSubnetRoutes),
+            subtitle: Text(routes.join('\n')),
+          ),
+        if (peers.isNotEmpty)
+          ListItem.next(
+            title: Text(appLocalizations.tailscaleDevices),
+            subtitle: Text(
+              appLocalizations.tailscaleOnlineCount(
+                peers.where((p) => p.online).length,
+                peers.length,
+              ),
+            ),
+            delegate: NextDelegate(
+              title: appLocalizations.tailscaleDevices,
+              builder: (_) => _PeersView(peers: peers),
+            ),
+          ),
+        if (status.health.isNotEmpty && status.state != 'Error')
+          ListItem(
+            leading: const Icon(Icons.warning_amber_rounded),
+            title: Text(appLocalizations.tailscaleWarnings),
+            subtitle: Text(status.health.join('\n')),
+          ),
+      ],
+    ).first;
+  }
+}
+
+/// Tailnet devices as of opening the page; tap copies a device's IP.
+class _PeersView extends StatelessWidget {
+  final List<TailscalePeer> peers;
+
+  const _PeersView({required this.peers});
+
+  @override
+  Widget build(BuildContext context) {
+    final disabled = Theme.of(context).disabledColor;
+    return generateListView(
+      generateSection(
+        items: [
+          for (final peer in peers)
+            ListItem(
+              leading: Icon(
+                Icons.circle,
+                size: 10,
+                color: peer.online ? Colors.green : disabled,
+              ),
+              title: Text(peer.name),
+              subtitle: Text(
+                [
+                  ...peer.ips.take(1),
+                  if (peer.os.isNotEmpty) peer.os,
+                  if (peer.online)
+                    peer.direct ? 'direct' : 'relay ${peer.relay}',
+                  if (peer.exitNode) appLocalizations.tailscaleExitNode,
+                  ...peer.routes,
+                  if (peer.rxBytes + peer.txBytes > 0)
+                    '↓${TrafficValue(value: peer.rxBytes).shortShow} '
+                        '↑${TrafficValue(value: peer.txBytes).shortShow}',
+                ].join(' · '),
+              ),
+              onTap: peer.ips.isEmpty
+                  ? null
+                  : () => _copy(context, peer.ips.first),
+            ),
+        ],
       ),
     );
   }

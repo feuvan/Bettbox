@@ -49,9 +49,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m13(count) => "已选择 ${count} 项";
 
-  static String m14(label) => "${label}必须为URL";
+  static String m14(online, total) => "${online} / ${total} 在线";
 
-  static String m15(count) => "${Intl.plural(count, other: '年')}";
+  static String m15(label) => "${label}必须为URL";
+
+  static String m16(count) => "${Intl.plural(count, other: '年')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -917,6 +919,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleAuthKeyDesc": MessageLookupByLibrary.simpleMessage(
       "可选；不填写时请使用“登录”（SSO/OIDC）",
     ),
+    "tailscaleConnected": MessageLookupByLibrary.simpleMessage("已连接"),
     "tailscaleControlUrl": MessageLookupByLibrary.simpleMessage("控制服务器"),
     "tailscaleControlUrlDesc": MessageLookupByLibrary.simpleMessage(
       "留空使用 Tailscale 官方服务器，Headscale 请填写其地址",
@@ -925,6 +928,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleDesc": MessageLookupByLibrary.simpleMessage(
       "让指定的域名和 IP 通过 Tailscale 网络访问",
     ),
+    "tailscaleDevices": MessageLookupByLibrary.simpleMessage("设备"),
     "tailscaleDns": MessageLookupByLibrary.simpleMessage("Tailnet DNS"),
     "tailscaleDnsDesc": MessageLookupByLibrary.simpleMessage(
       "由 tailnet 内 DNS 服务器解析的域名，格式为 域名=服务器（如 corp.example.com=10.1.0.53）。请将解析到的网段加入分流列表",
@@ -958,6 +962,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "tailscaleNetwork": MessageLookupByLibrary.simpleMessage("网络"),
     "tailscaleNetworks": MessageLookupByLibrary.simpleMessage("网络列表"),
+    "tailscaleNotStarted": MessageLookupByLibrary.simpleMessage("未启动"),
+    "tailscaleNotStartedDesc": MessageLookupByLibrary.simpleMessage(
+      "首次使用时启动，点击立即启动",
+    ),
+    "tailscaleOnlineCount": m14,
     "tailscaleReset": MessageLookupByLibrary.simpleMessage("重置节点"),
     "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(
       "清除本设备的 tailnet 身份并作为新设备加入；旧设备需在管理后台中删除",
@@ -969,10 +978,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleStarting": MessageLookupByLibrary.simpleMessage(
       "正在启动 Tailscale…",
     ),
+    "tailscaleSubnetRoutes": MessageLookupByLibrary.simpleMessage("子网路由"),
+    "tailscaleThisDevice": MessageLookupByLibrary.simpleMessage("本设备"),
     "tailscaleUdp": MessageLookupByLibrary.simpleMessage("UDP"),
     "tailscaleUdpDesc": MessageLookupByLibrary.simpleMessage(
       "允许 UDP 流量通过 Tailscale",
     ),
+    "tailscaleWarnings": MessageLookupByLibrary.simpleMessage("警告"),
     "tcpConcurrent": MessageLookupByLibrary.simpleMessage("TCP并发"),
     "tcpConcurrentDesc": MessageLookupByLibrary.simpleMessage("开启后允许 TCP 并发连接"),
     "testUrl": MessageLookupByLibrary.simpleMessage("测试链接"),
@@ -1058,7 +1070,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "upload": MessageLookupByLibrary.simpleMessage("上传"),
     "url": MessageLookupByLibrary.simpleMessage("URL"),
     "urlDesc": MessageLookupByLibrary.simpleMessage("通过 URL 获取配置文件"),
-    "urlTip": m14,
+    "urlTip": m15,
     "useGlobalScriptOverride": MessageLookupByLibrary.simpleMessage("使用全局脚本覆写"),
     "useHosts": MessageLookupByLibrary.simpleMessage("使用Hosts"),
     "useSystemHosts": MessageLookupByLibrary.simpleMessage("使用系统 Hosts"),
@@ -1092,6 +1104,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "whitelistMode": MessageLookupByLibrary.simpleMessage("白名单模式"),
     "writeToSystem": MessageLookupByLibrary.simpleMessage("写入系统"),
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage("需要管理员权限"),
-    "years": m15,
+    "years": m16,
   };
 }

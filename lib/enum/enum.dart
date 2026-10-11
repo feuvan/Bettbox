@@ -267,6 +267,7 @@ enum ActionMethod {
   getMode,
   parseExternalProviderContent,
   getCoreStatus,
+  getTailscaleStatus,
 
   ///Android,
   setState,

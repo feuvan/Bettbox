@@ -53,9 +53,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m13(count) => "${count} items selected";
 
-  static String m14(label) => "${label} must be a URL";
+  static String m14(online, total) => "${online} / ${total} online";
 
-  static String m15(count) =>
+  static String m15(label) => "${label} must be a URL";
+
+  static String m16(count) =>
       "${Intl.plural(count, one: 'year', other: 'years')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -1282,6 +1284,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleAuthKeyDesc": MessageLookupByLibrary.simpleMessage(
       "Optional; without one, use Log in (SSO/OIDC)",
     ),
+    "tailscaleConnected": MessageLookupByLibrary.simpleMessage("Connected"),
     "tailscaleControlUrl": MessageLookupByLibrary.simpleMessage(
       "Control server",
     ),
@@ -1294,6 +1297,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleDesc": MessageLookupByLibrary.simpleMessage(
       "Route chosen domains and IPs through your tailnet",
     ),
+    "tailscaleDevices": MessageLookupByLibrary.simpleMessage("Devices"),
     "tailscaleDns": MessageLookupByLibrary.simpleMessage("Tailnet DNS"),
     "tailscaleDnsDesc": MessageLookupByLibrary.simpleMessage(
       "Domains resolved by a DNS server inside the tailnet, as domain=server (e.g. corp.example.com=10.1.0.53). Add the subnets they resolve to under Routing list",
@@ -1331,6 +1335,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "tailscaleNetwork": MessageLookupByLibrary.simpleMessage("Network"),
     "tailscaleNetworks": MessageLookupByLibrary.simpleMessage("Networks"),
+    "tailscaleNotStarted": MessageLookupByLibrary.simpleMessage("Not started"),
+    "tailscaleNotStartedDesc": MessageLookupByLibrary.simpleMessage(
+      "Starts on first use; tap to start now",
+    ),
+    "tailscaleOnlineCount": m14,
     "tailscaleReset": MessageLookupByLibrary.simpleMessage("Reset node"),
     "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(
       "Forget this device\'s tailnet identity and join as a new device; remove the old one in the admin console",
@@ -1342,10 +1351,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleStarting": MessageLookupByLibrary.simpleMessage(
       "Starting Tailscale…",
     ),
+    "tailscaleSubnetRoutes": MessageLookupByLibrary.simpleMessage(
+      "Subnet routes",
+    ),
+    "tailscaleThisDevice": MessageLookupByLibrary.simpleMessage("This device"),
     "tailscaleUdp": MessageLookupByLibrary.simpleMessage("UDP"),
     "tailscaleUdpDesc": MessageLookupByLibrary.simpleMessage(
       "Send UDP traffic through Tailscale",
     ),
+    "tailscaleWarnings": MessageLookupByLibrary.simpleMessage("Warnings"),
     "tcpConcurrent": MessageLookupByLibrary.simpleMessage("TCP Concurrent"),
     "tcpConcurrentDesc": MessageLookupByLibrary.simpleMessage(
       "Allow concurrent TCP connections",
@@ -1463,7 +1477,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "upload": MessageLookupByLibrary.simpleMessage("Upload"),
     "url": MessageLookupByLibrary.simpleMessage("URL"),
     "urlDesc": MessageLookupByLibrary.simpleMessage("Get profile via URL"),
-    "urlTip": m14,
+    "urlTip": m15,
     "useGlobalScriptOverride": MessageLookupByLibrary.simpleMessage(
       "Use Global Script Override",
     ),
@@ -1509,6 +1523,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage(
       "Requires administrator privileges",
     ),
-    "years": m15,
+    "years": m16,
   };
 }
