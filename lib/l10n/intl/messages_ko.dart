@@ -1080,6 +1080,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleNotStartedDesc": MessageLookupByLibrary.simpleMessage(
       "처음 사용할 때 시작됩니다. 탭하면 지금 시작",
     ),
+    "tailscaleNotes": MessageLookupByLibrary.simpleMessage(
+      "• 내장 노드: Bettbox가 직접 tailnet에 참여하므로 Tailscale 앱이 필요 없습니다. 라우팅 목록과 Tailnet DNS의 트래픽만 거칩니다.\n• 규칙 모드에서만 동작: 전역 및 직접 모드는 이 규칙을 건너뜁니다.\n• host.tailnet.ts.net 같은 전체 이름을 사용하세요. nas 같은 짧은 이름은 해석되지 않습니다.\n• 서브넷: 라우팅 목록에 추가하고 \'서브넷 경로 수락\'을 켜세요. 데스크톱에서 TUN 없이 사용하면 사설 서브넷(10.x, 172.16–31.x, 192.168.x)은 시스템 프록시를 우회합니다.\n• tailnet을 통해 공개 사이트에 접속하려면 출구 노드가 필요합니다.\n• tailnet IPv6 주소는 IPv6를 켜야 사용할 수 있습니다.\n• 노드는 처음 사용할 때 시작됩니다. 로그인 링크는 Bettbox가 열려 있을 때만 표시됩니다.\n• Android: 라우팅 목록 변경은 VPN을 다시 시작한 후 적용됩니다.",
+    ),
+    "tailscaleNotesTitle": MessageLookupByLibrary.simpleMessage("안내"),
     "tailscaleOnlineCount": m14,
     "tailscaleReset": MessageLookupByLibrary.simpleMessage("노드 초기화"),
     "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(

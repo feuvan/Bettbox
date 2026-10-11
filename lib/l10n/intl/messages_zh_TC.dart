@@ -978,6 +978,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleNotStartedDesc": MessageLookupByLibrary.simpleMessage(
       "首次使用時啟動，點擊立即啟動",
     ),
+    "tailscaleNotes": MessageLookupByLibrary.simpleMessage(
+      "• 內建節點：Bettbox 自身加入 tailnet，無需安裝 Tailscale 用戶端；只有分流清單和 Tailnet DNS 中的流量經過它。\n• 僅在規則模式下生效：全域和直連模式會略過這些規則。\n• 請使用完整名稱，如 host.tailnet.ts.net；nas 這類短名稱無法解析。\n• 子網：請加入分流清單並開啟「接受子網路由」。桌面端未開啟 TUN 時，私有網段（10.x、172.16–31.x、192.168.x）會被系統代理略過。\n• 經 tailnet 存取公開網站需要設定出口節點。\n• tailnet 的 IPv6 位址需開啟 IPv6。\n• 節點在首次使用時啟動；登入連結僅在 Bettbox 開啟時顯示。\n• Android：分流清單的修改需重新啟動 VPN 後生效。",
+    ),
+    "tailscaleNotesTitle": MessageLookupByLibrary.simpleMessage("使用說明"),
     "tailscaleOnlineCount": m14,
     "tailscaleReset": MessageLookupByLibrary.simpleMessage("重設節點"),
     "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(

@@ -177,6 +177,23 @@ class TailscaleView extends ConsumerWidget {
           ),
         ],
       ),
+      ...generateSection(
+        title: appLocalizations.tailscaleNotesTitle,
+        plain: true,
+        separated: false,
+        items: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            child: Text(
+              appLocalizations.tailscaleNotes,
+              style: context.textTheme.bodySmall?.copyWith(
+                color: context.colorScheme.onSurfaceVariant,
+                height: 1.6,
+              ),
+            ),
+          ),
+        ],
+      ),
     ]);
   }
 }

@@ -874,6 +874,26 @@ class AppLocalizations {
     );
   }
 
+  /// `Notes`
+  String get tailscaleNotesTitle {
+    return Intl.message(
+      'Notes',
+      name: 'tailscaleNotesTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `• Built-in node: Bettbox joins your tailnet itself, no Tailscale app needed. Only the Routing list and Tailnet DNS go through it.\n• Rule mode only: Global and Direct modes skip these rules.\n• Use full names like host.tailnet.ts.net; short names like nas don't resolve.\n• Subnets: add them to the Routing list and turn on Accept subnet routes. On desktop without TUN, private subnets (10.x, 172.16–31.x, 192.168.x) bypass the system proxy.\n• Public sites through the tailnet need an exit node.\n• Tailnet IPv6 addresses need IPv6 turned on.\n• The node starts on first use. Its login link is only shown while Bettbox is open.\n• Android: Routing list changes apply after the VPN restarts.`
+  String get tailscaleNotes {
+    return Intl.message(
+      '• Built-in node: Bettbox joins your tailnet itself, no Tailscale app needed. Only the Routing list and Tailnet DNS go through it.\n• Rule mode only: Global and Direct modes skip these rules.\n• Use full names like host.tailnet.ts.net; short names like nas don\'t resolve.\n• Subnets: add them to the Routing list and turn on Accept subnet routes. On desktop without TUN, private subnets (10.x, 172.16–31.x, 192.168.x) bypass the system proxy.\n• Public sites through the tailnet need an exit node.\n• Tailnet IPv6 addresses need IPv6 turned on.\n• The node starts on first use. Its login link is only shown while Bettbox is open.\n• Android: Routing list changes apply after the VPN restarts.',
+      name: 'tailscaleNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Disable QUIC`
   String get disableQuic {
     return Intl.message(

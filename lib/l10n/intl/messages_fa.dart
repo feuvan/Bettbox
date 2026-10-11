@@ -1367,6 +1367,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleNotStartedDesc": MessageLookupByLibrary.simpleMessage(
       "در اولین استفاده راه‌اندازی می‌شود؛ برای راه‌اندازی ضربه بزنید",
     ),
+    "tailscaleNotes": MessageLookupByLibrary.simpleMessage(
+      "• گره داخلی: Bettbox خودش به tailnet می‌پیوندد و به برنامه Tailscale نیازی نیست. فقط ترافیک فهرست مسیریابی و Tailnet DNS از آن عبور می‌کند.\n• فقط در حالت قانون: حالت‌های سراسری و مستقیم این قوانین را نادیده می‌گیرند.\n• از نام کامل مانند host.tailnet.ts.net استفاده کنید؛ نام‌های کوتاه مانند nas resolve نمی‌شوند.\n• زیرشبکه‌ها: آن‌ها را به فهرست مسیریابی اضافه کنید و «پذیرش مسیرهای زیرشبکه» را روشن کنید. در دسکتاپ بدون TUN، زیرشبکه‌های خصوصی (10.x، 172.16–31.x، 192.168.x) از پروکسی سیستم عبور نمی‌کنند.\n• برای دسترسی به سایت‌های عمومی از طریق tailnet به گره خروجی نیاز است.\n• آدرس‌های IPv6 شبکه tailnet به روشن بودن IPv6 نیاز دارند.\n• گره در اولین استفاده راه‌اندازی می‌شود. پیوند ورود فقط وقتی Bettbox باز است نمایش داده می‌شود.\n• Android: تغییرات فهرست مسیریابی پس از راه‌اندازی دوباره VPN اعمال می‌شوند.",
+    ),
+    "tailscaleNotesTitle": MessageLookupByLibrary.simpleMessage("توضیحات"),
     "tailscaleOnlineCount": m14,
     "tailscaleReset": MessageLookupByLibrary.simpleMessage("بازنشانی گره"),
     "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(

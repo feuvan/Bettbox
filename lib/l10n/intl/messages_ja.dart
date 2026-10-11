@@ -1084,6 +1084,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleNotStartedDesc": MessageLookupByLibrary.simpleMessage(
       "初回使用時に起動します。タップで今すぐ起動",
     ),
+    "tailscaleNotes": MessageLookupByLibrary.simpleMessage(
+      "• 内蔵ノード：Bettbox 自身が tailnet に参加するため、Tailscale アプリは不要です。ルーティングリストと Tailnet DNS の通信だけが経由します。\n• ルールモードのみ：グローバル／ダイレクトモードではこれらのルールは使われません。\n• host.tailnet.ts.net のような完全な名前を使ってください。nas のような短い名前は解決されません。\n• サブネット：ルーティングリストに追加し、「サブネットルートを受け入れる」をオンにしてください。デスクトップで TUN を使わない場合、プライベートサブネット（10.x、172.16–31.x、192.168.x）はシステムプロキシを経由しません。\n• tailnet 経由で公開サイトにアクセスするには出口ノードが必要です。\n• tailnet の IPv6 アドレスには IPv6 の有効化が必要です。\n• ノードは初回使用時に起動します。ログインリンクは Bettbox が開いている間だけ表示されます。\n• Android：ルーティングリストの変更は VPN の再起動後に反映されます。",
+    ),
+    "tailscaleNotesTitle": MessageLookupByLibrary.simpleMessage("説明"),
     "tailscaleOnlineCount": m14,
     "tailscaleReset": MessageLookupByLibrary.simpleMessage("ノードをリセット"),
     "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(

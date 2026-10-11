@@ -1386,6 +1386,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "tailscaleNotStartedDesc": MessageLookupByLibrary.simpleMessage(
       "Запускается при первом использовании; нажмите, чтобы запустить",
     ),
+    "tailscaleNotes": MessageLookupByLibrary.simpleMessage(
+      "• Встроенный узел: Bettbox сам подключается к tailnet, приложение Tailscale не нужно. Через него идёт только трафик из списка маршрутизации и Tailnet DNS.\n• Только в режиме правил: глобальный и прямой режимы пропускают эти правила.\n• Используйте полные имена вроде host.tailnet.ts.net; короткие имена вроде nas не разрешаются.\n• Подсети: добавьте их в список маршрутизации и включите приём маршрутов подсетей. На ПК без TUN частные подсети (10.x, 172.16–31.x, 192.168.x) обходят системный прокси.\n• Для публичных сайтов через tailnet нужен выходной узел.\n• Для IPv6-адресов tailnet нужно включить IPv6.\n• Узел запускается при первом использовании. Ссылка для входа показывается, только пока Bettbox открыт.\n• Android: изменения списка маршрутизации применяются после перезапуска VPN.",
+    ),
+    "tailscaleNotesTitle": MessageLookupByLibrary.simpleMessage("Пояснения"),
     "tailscaleOnlineCount": m14,
     "tailscaleReset": MessageLookupByLibrary.simpleMessage("Сбросить узел"),
     "tailscaleResetDesc": MessageLookupByLibrary.simpleMessage(
