@@ -73,10 +73,57 @@ String? _notEmpty(String? value) => value == null || value.trim().isEmpty
     ? appLocalizations.emptyTip(appLocalizations.name)
     : null;
 
-class TailscaleView extends ConsumerWidget {
+class TailscaleView extends ConsumerStatefulWidget {
   const TailscaleView({super.key});
 
-  Future<void> _addNetwork(WidgetRef ref) async {
+  @override
+  ConsumerState<TailscaleView> createState() => _TailscaleViewState();
+}
+
+class _TailscaleViewState extends ConsumerState<TailscaleView> {
+  // Live status of the running node and the network it was read for.
+  ({String networkId, TailscaleStatus status})? _status;
+  bool _busy = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _refresh();
+    // The app-wide ticker pauses while the app is backgrounded or hidden.
+    dashboardRefreshManager.tick2s.addListener(_refresh);
+  }
+
+  @override
+  void dispose() {
+    dashboardRefreshManager.tick2s.removeListener(_refresh);
+    super.dispose();
+  }
+
+  Future<void> _refresh() async {
+    final network = ref.read(tailscaleSettingProvider).runningNetwork;
+    if (_busy || network == null) return;
+    _busy = true;
+    try {
+      final status = await clashCore.getTailscaleStatus();
+      // Right after switching networks the old node may still answer.
+      final matches =
+          status != null &&
+          (status.dir.isEmpty || status.dir.endsWith(network.id));
+      if (mounted) {
+        setState(
+          () => _status = matches
+              ? (networkId: network.id, status: status)
+              : null,
+        );
+      }
+    } catch (_) {
+      // Keep the last status.
+    } finally {
+      _busy = false;
+    }
+  }
+
+  Future<void> _addNetwork() async {
     final label = await globalState.showCommonDialog<String>(
       child: InputDialog(
         title: appLocalizations.tailscaleAddNetwork,
@@ -98,10 +145,13 @@ class TailscaleView extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final props = ref.watch(tailscaleSettingProvider);
     final active = props.activeNetwork;
     final authUrl = ref.watch(tailscaleAuthUrlProvider);
+    final status = _status?.networkId == props.runningNetwork?.id
+        ? _status?.status
+        : null;
 
     return generateListView([
       ...generateSection(
@@ -152,8 +202,11 @@ class TailscaleView extends ConsumerWidget {
             ),
         ],
       ),
-      if (props.enable && active != null)
-        _StatusSection(key: ValueKey(active.id), networkId: active.id),
+      if (status != null)
+        ...generateSection(
+          title: appLocalizations.status,
+          items: _statusItems(context, ref, status),
+        ),
       ...generateSection(
         title: appLocalizations.tailscaleNetworks,
         items: [
@@ -173,7 +226,7 @@ class TailscaleView extends ConsumerWidget {
           ListItem(
             leading: const Icon(Icons.add),
             title: Text(appLocalizations.tailscaleAddNetwork),
-            onTap: () => _addNetwork(ref),
+            onTap: _addNetwork,
           ),
         ],
       ),
@@ -466,132 +519,81 @@ class _EntriesItem extends StatelessWidget {
   }
 }
 
-/// Live status of the running node, refreshed while the page is open.
-class _StatusSection extends ConsumerStatefulWidget {
-  final String networkId;
+/// Rows describing the running node's live [status].
+List<Widget> _statusItems(
+  BuildContext context,
+  WidgetRef ref,
+  TailscaleStatus status,
+) {
+  final self = status.self;
+  final peers = status.peers;
+  final exitNode = peers.where((p) => p.exitNode).firstOrNull;
+  final routes = [
+    for (final peer in peers)
+      for (final route in peer.routes) '$route · ${peer.name}',
+  ];
+  final notStarted = status.state == 'NotStarted';
+  final state = switch (status.state) {
+    'Running' => appLocalizations.tailscaleConnected,
+    'NeedsLogin' || 'NeedsMachineAuth' => appLocalizations.tailscaleLoginNeeded,
+    'Starting' || 'NoState' => appLocalizations.tailscaleStarting,
+    'NotStarted' => appLocalizations.tailscaleNotStarted,
+    'Error' => status.health.firstOrNull ?? status.state,
+    final other => other,
+  };
 
-  const _StatusSection({super.key, required this.networkId});
-
-  @override
-  ConsumerState<_StatusSection> createState() => _StatusSectionState();
-}
-
-class _StatusSectionState extends ConsumerState<_StatusSection> {
-  TailscaleStatus? _status;
-  bool _busy = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _refresh();
-    // The app-wide ticker pauses while the app is backgrounded or hidden.
-    dashboardRefreshManager.tick2s.addListener(_refresh);
-  }
-
-  @override
-  void dispose() {
-    dashboardRefreshManager.tick2s.removeListener(_refresh);
-    super.dispose();
-  }
-
-  Future<void> _refresh() async {
-    if (_busy) return;
-    _busy = true;
-    try {
-      final status = await clashCore.getTailscaleStatus();
-      // Right after switching networks the old node may still answer.
-      final stale =
-          status != null &&
-          status.dir.isNotEmpty &&
-          !status.dir.endsWith(widget.networkId);
-      if (mounted) setState(() => _status = stale ? null : status);
-    } catch (_) {
-      // Keep the last status.
-    } finally {
-      _busy = false;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final status = _status;
-    if (status == null) return const SizedBox.shrink();
-    final self = status.self;
-    final peers = status.peers;
-    final exitNode = peers.where((p) => p.exitNode).firstOrNull;
-    final routes = [
-      for (final peer in peers)
-        for (final route in peer.routes) '$route · ${peer.name}',
-    ];
-    final notStarted = status.state == 'NotStarted';
-    final state = switch (status.state) {
-      'Running' => appLocalizations.tailscaleConnected,
-      'NeedsLogin' ||
-      'NeedsMachineAuth' => appLocalizations.tailscaleLoginNeeded,
-      'Starting' || 'NoState' => appLocalizations.tailscaleStarting,
-      'NotStarted' => appLocalizations.tailscaleNotStarted,
-      'Error' => status.health.firstOrNull ?? status.state,
-      final other => other,
-    };
-
-    return generateSection(
-      title: appLocalizations.status,
-      items: [
-        ListItem(
-          title: Text(state),
-          subtitle: notStarted
-              ? Text(appLocalizations.tailscaleNotStartedDesc)
-              : status.tailnet.isNotEmpty
-              ? Text(status.tailnet)
-              : null,
-          onTap: notStarted ? () => _startNode(ref) : null,
+  return [
+    ListItem(
+      title: Text(state),
+      subtitle: notStarted
+          ? Text(appLocalizations.tailscaleNotStartedDesc)
+          : status.tailnet.isNotEmpty
+          ? Text(status.tailnet)
+          : null,
+      onTap: notStarted ? () => _startNode(ref) : null,
+    ),
+    if (self != null && self.ips.isNotEmpty)
+      ListItem(
+        title: Text(appLocalizations.tailscaleThisDevice),
+        subtitle: Text(
+          [
+            if (self.dnsName.isNotEmpty) self.dnsName,
+            self.ips.join('  '),
+          ].join('\n'),
         ),
-        if (self != null && self.ips.isNotEmpty)
-          ListItem(
-            title: Text(appLocalizations.tailscaleThisDevice),
-            subtitle: Text(
-              [
-                if (self.dnsName.isNotEmpty) self.dnsName,
-                self.ips.join('  '),
-              ].join('\n'),
-            ),
-            onTap: () => _copy(context, self.ips.first),
+        onTap: () => _copy(context, self.ips.first),
+      ),
+    if (exitNode != null)
+      ListItem(
+        title: Text(appLocalizations.tailscaleExitNode),
+        subtitle: Text([exitNode.name, ...exitNode.ips.take(1)].join(' · ')),
+      ),
+    if (routes.isNotEmpty)
+      ListItem(
+        title: Text(appLocalizations.tailscaleSubnetRoutes),
+        subtitle: Text(routes.join('\n')),
+      ),
+    if (peers.isNotEmpty)
+      ListItem.next(
+        title: Text(appLocalizations.tailscaleDevices),
+        subtitle: Text(
+          appLocalizations.tailscaleOnlineCount(
+            peers.where((p) => p.online).length,
+            peers.length,
           ),
-        if (exitNode != null)
-          ListItem(
-            title: Text(appLocalizations.tailscaleExitNode),
-            subtitle: Text(
-              [exitNode.name, ...exitNode.ips.take(1)].join(' · '),
-            ),
-          ),
-        if (routes.isNotEmpty)
-          ListItem(
-            title: Text(appLocalizations.tailscaleSubnetRoutes),
-            subtitle: Text(routes.join('\n')),
-          ),
-        if (peers.isNotEmpty)
-          ListItem.next(
-            title: Text(appLocalizations.tailscaleDevices),
-            subtitle: Text(
-              appLocalizations.tailscaleOnlineCount(
-                peers.where((p) => p.online).length,
-                peers.length,
-              ),
-            ),
-            delegate: NextDelegate(
-              title: appLocalizations.tailscaleDevices,
-              builder: (_) => _PeersView(peers: peers),
-            ),
-          ),
-        if (status.health.isNotEmpty && status.state != 'Error')
-          ListItem(
-            leading: const Icon(Icons.warning_amber_rounded),
-            title: Text(appLocalizations.tailscaleWarnings),
-            subtitle: Text(status.health.join('\n')),
-          ),
-      ],
-    ).first;
-  }
+        ),
+        delegate: NextDelegate(
+          title: appLocalizations.tailscaleDevices,
+          builder: (_) => _PeersView(peers: peers),
+        ),
+      ),
+    if (status.health.isNotEmpty && status.state != 'Error')
+      ListItem(
+        leading: const Icon(Icons.warning_amber_rounded),
+        title: Text(appLocalizations.tailscaleWarnings),
+        subtitle: Text(status.health.join('\n')),
+      ),
+  ];
 }
 
 /// Tailnet devices as of opening the page; tap copies a device's IP.

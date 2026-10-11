@@ -159,7 +159,10 @@ func tailscalePeerOf(p *ipnstate.PeerStatus) tailscalePeer {
 	}
 	if p.PrimaryRoutes != nil {
 		for i := 0; i < p.PrimaryRoutes.Len(); i++ {
-			peer.Routes = append(peer.Routes, p.PrimaryRoutes.At(i).String())
+			// Default routes mean "exit node" (ExitNodeOption), not a subnet.
+			if route := p.PrimaryRoutes.At(i); route.Bits() > 0 {
+				peer.Routes = append(peer.Routes, route.String())
+			}
 		}
 	}
 	return peer
