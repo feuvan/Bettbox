@@ -4563,7 +4563,8 @@ as int,
 mixin _$TailscaleStatus {
 
 // tsnet backend state (Running, NeedsLogin, ...), NotStarted or Error.
- String get state; String get tailnet; TailscalePeer? get self; List<TailscalePeer> get peers; List<String> get health;
+ String get state;// State dir of the reporting node, i.e. which network it belongs to.
+ String get dir; String get tailnet; TailscalePeer? get self; List<TailscalePeer> get peers; List<String> get health;
 /// Create a copy of TailscaleStatus
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -4576,16 +4577,16 @@ $TailscaleStatusCopyWith<TailscaleStatus> get copyWith => _$TailscaleStatusCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TailscaleStatus&&(identical(other.state, state) || other.state == state)&&(identical(other.tailnet, tailnet) || other.tailnet == tailnet)&&(identical(other.self, self) || other.self == self)&&const DeepCollectionEquality().equals(other.peers, peers)&&const DeepCollectionEquality().equals(other.health, health));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TailscaleStatus&&(identical(other.state, state) || other.state == state)&&(identical(other.dir, dir) || other.dir == dir)&&(identical(other.tailnet, tailnet) || other.tailnet == tailnet)&&(identical(other.self, self) || other.self == self)&&const DeepCollectionEquality().equals(other.peers, peers)&&const DeepCollectionEquality().equals(other.health, health));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,state,tailnet,self,const DeepCollectionEquality().hash(peers),const DeepCollectionEquality().hash(health));
+int get hashCode => Object.hash(runtimeType,state,dir,tailnet,self,const DeepCollectionEquality().hash(peers),const DeepCollectionEquality().hash(health));
 
 @override
 String toString() {
-  return 'TailscaleStatus(state: $state, tailnet: $tailnet, self: $self, peers: $peers, health: $health)';
+  return 'TailscaleStatus(state: $state, dir: $dir, tailnet: $tailnet, self: $self, peers: $peers, health: $health)';
 }
 
 
@@ -4596,7 +4597,7 @@ abstract mixin class $TailscaleStatusCopyWith<$Res>  {
   factory $TailscaleStatusCopyWith(TailscaleStatus value, $Res Function(TailscaleStatus) _then) = _$TailscaleStatusCopyWithImpl;
 @useResult
 $Res call({
- String state, String tailnet, TailscalePeer? self, List<TailscalePeer> peers, List<String> health
+ String state, String dir, String tailnet, TailscalePeer? self, List<TailscalePeer> peers, List<String> health
 });
 
 
@@ -4613,9 +4614,10 @@ class _$TailscaleStatusCopyWithImpl<$Res>
 
 /// Create a copy of TailscaleStatus
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? state = null,Object? tailnet = null,Object? self = freezed,Object? peers = null,Object? health = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? state = null,Object? dir = null,Object? tailnet = null,Object? self = freezed,Object? peers = null,Object? health = null,}) {
   return _then(_self.copyWith(
 state: null == state ? _self.state : state // ignore: cast_nullable_to_non_nullable
+as String,dir: null == dir ? _self.dir : dir // ignore: cast_nullable_to_non_nullable
 as String,tailnet: null == tailnet ? _self.tailnet : tailnet // ignore: cast_nullable_to_non_nullable
 as String,self: freezed == self ? _self.self : self // ignore: cast_nullable_to_non_nullable
 as TailscalePeer?,peers: null == peers ? _self.peers : peers // ignore: cast_nullable_to_non_nullable
@@ -4717,10 +4719,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String state,  String tailnet,  TailscalePeer? self,  List<TailscalePeer> peers,  List<String> health)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String state,  String dir,  String tailnet,  TailscalePeer? self,  List<TailscalePeer> peers,  List<String> health)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TailscaleStatus() when $default != null:
-return $default(_that.state,_that.tailnet,_that.self,_that.peers,_that.health);case _:
+return $default(_that.state,_that.dir,_that.tailnet,_that.self,_that.peers,_that.health);case _:
   return orElse();
 
 }
@@ -4738,10 +4740,10 @@ return $default(_that.state,_that.tailnet,_that.self,_that.peers,_that.health);c
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String state,  String tailnet,  TailscalePeer? self,  List<TailscalePeer> peers,  List<String> health)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String state,  String dir,  String tailnet,  TailscalePeer? self,  List<TailscalePeer> peers,  List<String> health)  $default,) {final _that = this;
 switch (_that) {
 case _TailscaleStatus():
-return $default(_that.state,_that.tailnet,_that.self,_that.peers,_that.health);case _:
+return $default(_that.state,_that.dir,_that.tailnet,_that.self,_that.peers,_that.health);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -4758,10 +4760,10 @@ return $default(_that.state,_that.tailnet,_that.self,_that.peers,_that.health);c
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String state,  String tailnet,  TailscalePeer? self,  List<TailscalePeer> peers,  List<String> health)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String state,  String dir,  String tailnet,  TailscalePeer? self,  List<TailscalePeer> peers,  List<String> health)?  $default,) {final _that = this;
 switch (_that) {
 case _TailscaleStatus() when $default != null:
-return $default(_that.state,_that.tailnet,_that.self,_that.peers,_that.health);case _:
+return $default(_that.state,_that.dir,_that.tailnet,_that.self,_that.peers,_that.health);case _:
   return null;
 
 }
@@ -4773,11 +4775,13 @@ return $default(_that.state,_that.tailnet,_that.self,_that.peers,_that.health);c
 @JsonSerializable()
 
 class _TailscaleStatus implements TailscaleStatus {
-  const _TailscaleStatus({this.state = '', this.tailnet = '', this.self, final  List<TailscalePeer> peers = const [], final  List<String> health = const []}): _peers = peers,_health = health;
+  const _TailscaleStatus({this.state = '', this.dir = '', this.tailnet = '', this.self, final  List<TailscalePeer> peers = const [], final  List<String> health = const []}): _peers = peers,_health = health;
   factory _TailscaleStatus.fromJson(Map<String, dynamic> json) => _$TailscaleStatusFromJson(json);
 
 // tsnet backend state (Running, NeedsLogin, ...), NotStarted or Error.
 @override@JsonKey() final  String state;
+// State dir of the reporting node, i.e. which network it belongs to.
+@override@JsonKey() final  String dir;
 @override@JsonKey() final  String tailnet;
 @override final  TailscalePeer? self;
  final  List<TailscalePeer> _peers;
@@ -4808,16 +4812,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TailscaleStatus&&(identical(other.state, state) || other.state == state)&&(identical(other.tailnet, tailnet) || other.tailnet == tailnet)&&(identical(other.self, self) || other.self == self)&&const DeepCollectionEquality().equals(other._peers, _peers)&&const DeepCollectionEquality().equals(other._health, _health));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TailscaleStatus&&(identical(other.state, state) || other.state == state)&&(identical(other.dir, dir) || other.dir == dir)&&(identical(other.tailnet, tailnet) || other.tailnet == tailnet)&&(identical(other.self, self) || other.self == self)&&const DeepCollectionEquality().equals(other._peers, _peers)&&const DeepCollectionEquality().equals(other._health, _health));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,state,tailnet,self,const DeepCollectionEquality().hash(_peers),const DeepCollectionEquality().hash(_health));
+int get hashCode => Object.hash(runtimeType,state,dir,tailnet,self,const DeepCollectionEquality().hash(_peers),const DeepCollectionEquality().hash(_health));
 
 @override
 String toString() {
-  return 'TailscaleStatus(state: $state, tailnet: $tailnet, self: $self, peers: $peers, health: $health)';
+  return 'TailscaleStatus(state: $state, dir: $dir, tailnet: $tailnet, self: $self, peers: $peers, health: $health)';
 }
 
 
@@ -4828,7 +4832,7 @@ abstract mixin class _$TailscaleStatusCopyWith<$Res> implements $TailscaleStatus
   factory _$TailscaleStatusCopyWith(_TailscaleStatus value, $Res Function(_TailscaleStatus) _then) = __$TailscaleStatusCopyWithImpl;
 @override @useResult
 $Res call({
- String state, String tailnet, TailscalePeer? self, List<TailscalePeer> peers, List<String> health
+ String state, String dir, String tailnet, TailscalePeer? self, List<TailscalePeer> peers, List<String> health
 });
 
 
@@ -4845,9 +4849,10 @@ class __$TailscaleStatusCopyWithImpl<$Res>
 
 /// Create a copy of TailscaleStatus
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? state = null,Object? tailnet = null,Object? self = freezed,Object? peers = null,Object? health = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? state = null,Object? dir = null,Object? tailnet = null,Object? self = freezed,Object? peers = null,Object? health = null,}) {
   return _then(_TailscaleStatus(
 state: null == state ? _self.state : state // ignore: cast_nullable_to_non_nullable
+as String,dir: null == dir ? _self.dir : dir // ignore: cast_nullable_to_non_nullable
 as String,tailnet: null == tailnet ? _self.tailnet : tailnet // ignore: cast_nullable_to_non_nullable
 as String,self: freezed == self ? _self.self : self // ignore: cast_nullable_to_non_nullable
 as TailscalePeer?,peers: null == peers ? _self._peers : peers // ignore: cast_nullable_to_non_nullable

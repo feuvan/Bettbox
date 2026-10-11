@@ -9,6 +9,7 @@ import (
 	"sort"
 	"strings"
 	"time"
+	"unsafe"
 
 	"github.com/metacubex/mihomo/constant"
 	"github.com/metacubex/mihomo/tunnel"
@@ -33,6 +34,7 @@ type tailscalePeer struct {
 
 type tailscaleStatus struct {
 	State   string          `json:"state"`
+	Dir     string          `json:"dir,omitempty"` // node state dir: which network
 	Tailnet string          `json:"tailnet,omitempty"`
 	Self    *tailscalePeer  `json:"self,omitempty"`
 	Peers   []tailscalePeer `json:"peers,omitempty"`
@@ -49,34 +51,57 @@ func handleGetTailscaleStatus(fn func(value string)) {
 			return
 		}
 		status := tailscaleStatus{State: "NotStarted"}
-		if server := appTailscaleServer(name); server != nil {
+		server, startErr := appTailscaleNode(name)
+		if startErr != nil {
+			status = tailscaleStatus{State: "Error", Health: []string{startErr.Error()}}
+		} else if server != nil {
 			st, err := queryTailscaleStatus(server)
 			if err != nil {
 				status = tailscaleStatus{State: "Error", Health: []string{err.Error()}}
 			} else {
 				status = summarizeTailscaleStatus(st)
 			}
+			status.Dir = server.Dir
 		}
 		data, _ := json.Marshal(status)
 		fn(string(data))
 	}()
 }
 
-// appTailscaleServer returns the node's tsnet server once the outbound has
-// started it: starting it here would bypass the outbound, which then could
-// not close it on reload. Both fields are private to the kernel's outbound.
-func appTailscaleServer(name string) *tsnet.Server {
+// appTailscaleNode inspects the app node through the kernel outbound's
+// private fields. It returns the tsnet server once the outbound has started
+// it (starting it here would bypass the outbound, which then could not close
+// it on reload), or the error if starting failed. A closed node (an old
+// config being replaced) counts as not running.
+func appTailscaleNode(name string) (*tsnet.Server, error) {
 	p := tunnel.Proxies()[name]
 	if p == nil || p.Type() != constant.Tailscale {
-		return nil
+		return nil, nil
 	}
-	started := findFieldByName(reflect.ValueOf(p), "serverStarted")
-	server := findFieldByName(reflect.ValueOf(p), "server")
-	if !started.IsValid() || started.Kind() != reflect.Bool || !started.Bool() ||
-		!server.IsValid() || server.Type() != reflect.TypeOf((*tsnet.Server)(nil)) || server.IsNil() {
-		return nil
+	field := func(name string) any {
+		f := findFieldByName(reflect.ValueOf(p), name)
+		if !f.IsValid() || !f.CanAddr() {
+			return nil
+		}
+		return reflect.NewAt(f.Type(), unsafe.Pointer(f.UnsafeAddr())).Elem().Interface()
 	}
-	return (*tsnet.Server)(server.UnsafePointer())
+	if ctx, ok := field("ctx").(context.Context); !ok || ctx.Err() != nil {
+		return nil, nil
+	}
+	if started, _ := field("serverStarted").(bool); started {
+		server, _ := field("server").(*tsnet.Server)
+		return server, nil
+	}
+	// A failed start closes backendInitCh after recording its error.
+	if ch, ok := field("backendInitCh").(chan struct{}); ok {
+		select {
+		case <-ch:
+			err, _ := field("backendInitErr").(error)
+			return nil, err
+		default:
+		}
+	}
+	return nil, nil
 }
 
 func queryTailscaleStatus(server *tsnet.Server) (*ipnstate.Status, error) {
@@ -112,8 +137,13 @@ func summarizeTailscaleStatus(st *ipnstate.Status) tailscaleStatus {
 }
 
 func tailscalePeerOf(p *ipnstate.PeerStatus) tailscalePeer {
+	// The machine name (MagicDNS label) is unique; OS hostnames often are not.
+	name, _, _ := strings.Cut(p.DNSName, ".")
+	if name == "" {
+		name = p.HostName
+	}
 	peer := tailscalePeer{
-		Name:           p.HostName,
+		Name:           name,
 		DNSName:        strings.TrimSuffix(p.DNSName, "."),
 		OS:             p.OS,
 		Online:         p.Online,

@@ -293,6 +293,8 @@ abstract class TailscaleStatus with _$TailscaleStatus {
   const factory TailscaleStatus({
     // tsnet backend state (Running, NeedsLogin, ...), NotStarted or Error.
     @Default('') String state,
+    // State dir of the reporting node, i.e. which network it belongs to.
+    @Default('') String dir,
     @Default('') String tailnet,
     TailscalePeer? self,
     @Default([]) List<TailscalePeer> peers,

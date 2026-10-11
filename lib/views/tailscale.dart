@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bett_box/clash/clash.dart';
 import 'package:bett_box/common/common.dart';
 import 'package:bett_box/models/models.dart';
@@ -155,7 +153,7 @@ class TailscaleView extends ConsumerWidget {
         ],
       ),
       if (props.enable && active != null)
-        _StatusSection(key: ValueKey(active.id)),
+        _StatusSection(key: ValueKey(active.id), networkId: active.id),
       ...generateSection(
         title: appLocalizations.tailscaleNetworks,
         items: [
@@ -453,7 +451,9 @@ class _EntriesItem extends StatelessWidget {
 
 /// Live status of the running node, refreshed while the page is open.
 class _StatusSection extends ConsumerStatefulWidget {
-  const _StatusSection({super.key});
+  final String networkId;
+
+  const _StatusSection({super.key, required this.networkId});
 
   @override
   ConsumerState<_StatusSection> createState() => _StatusSectionState();
@@ -461,24 +461,38 @@ class _StatusSection extends ConsumerStatefulWidget {
 
 class _StatusSectionState extends ConsumerState<_StatusSection> {
   TailscaleStatus? _status;
-  Timer? _timer;
+  bool _busy = false;
 
   @override
   void initState() {
     super.initState();
     _refresh();
-    _timer = Timer.periodic(const Duration(seconds: 3), (_) => _refresh());
+    // The app-wide ticker pauses while the app is backgrounded or hidden.
+    dashboardRefreshManager.tick2s.addListener(_refresh);
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
+    dashboardRefreshManager.tick2s.removeListener(_refresh);
     super.dispose();
   }
 
   Future<void> _refresh() async {
-    final status = await clashCore.getTailscaleStatus().catchError((_) => null);
-    if (mounted) setState(() => _status = status);
+    if (_busy) return;
+    _busy = true;
+    try {
+      final status = await clashCore.getTailscaleStatus();
+      // Right after switching networks the old node may still answer.
+      final stale =
+          status != null &&
+          status.dir.isNotEmpty &&
+          !status.dir.endsWith(widget.networkId);
+      if (mounted) setState(() => _status = stale ? null : status);
+    } catch (_) {
+      // Keep the last status.
+    } finally {
+      _busy = false;
+    }
   }
 
   @override

@@ -422,6 +422,7 @@ Map<String, dynamic> _$TailscalePeerToJson(_TailscalePeer instance) =>
 _TailscaleStatus _$TailscaleStatusFromJson(Map<String, dynamic> json) =>
     _TailscaleStatus(
       state: json['state'] as String? ?? '',
+      dir: json['dir'] as String? ?? '',
       tailnet: json['tailnet'] as String? ?? '',
       self: json['self'] == null
           ? null
@@ -441,6 +442,7 @@ _TailscaleStatus _$TailscaleStatusFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$TailscaleStatusToJson(_TailscaleStatus instance) =>
     <String, dynamic>{
       'state': instance.state,
+      'dir': instance.dir,
       'tailnet': instance.tailnet,
       'self': instance.self,
       'peers': instance.peers,
