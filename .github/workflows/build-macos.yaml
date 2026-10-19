@@ -1,0 +1,78 @@
+name: build-macos
+
+# macOS-only build of feature branches; mirrors the macOS job in build.yaml
+# without the other platforms or the release step.
+on:
+  push:
+    branches:
+      - 'feat/**'
+  workflow_dispatch:
+    inputs:
+      arch:
+        description: Architecture
+        type: choice
+        options: [arm64, amd64]
+        default: arm64
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  SENTRY_BACKEND: none
+  IPINFO_TOKEN: ${{ secrets.IPINFO_TOKEN || vars.IPINFO_TOKEN }}
+
+jobs:
+  build:
+    runs-on: macos-26
+    permissions:
+      contents: read
+    env:
+      ARCH: ${{ inputs.arch || 'arm64' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ env.ARCH == 'amd64' && 'x86_64-apple-darwin' || 'aarch64-apple-darwin' }}
+
+      - name: Setup Golang
+        uses: actions/setup-go@v6
+        with:
+          go-version: '1.25.x'
+          cache-dependency-path: core/go.sum
+
+      - name: Select Xcode
+        run: sudo xcode-select -s "$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+          cache-key: flutter-macos-${{ env.ARCH }}-${{ hashFiles('**/pubspec.lock') }}
+          flutter-version: '3.47.7'
+
+      - name: Clear Pub Cache Credentials
+        run: rm -f ~/.pub-cache/credentials.json 2>/dev/null || true
+
+      - name: Disable Swift Package Manager
+        run: flutter config --no-enable-swift-package-manager
+
+      - name: Build Bettbox
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+        run: |
+          flutter pub get
+          dart run build_runner build -d
+          dart setup.dart macos --arch "$ARCH"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: Bettbox-macos-${{ env.ARCH }}
+          path: ./dist/*
+          archive: false
+          overwrite: true
