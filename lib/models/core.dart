@@ -24,6 +24,14 @@ abstract mixin class AppMessageListener {
     required String url,
     required String state,
   }) {}
+
+  void onSpeedTest(SpeedTestState state) {}
+
+  void onStunTest(StunTestState state) {}
+
+  void onIperf(IperfState state) {}
+
+  void onLocalPing(LocalPingState state) {}
 }
 
 // abstract mixin class ServiceMessageListener {

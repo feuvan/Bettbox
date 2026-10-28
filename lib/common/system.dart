@@ -47,6 +47,21 @@ class System {
     };
   }
 
+  Future<String> get deviceName async {
+    try {
+      if (isAndroid) {
+        final info = await DeviceInfoPlugin().androidInfo;
+        return info.model.isNotEmpty ? info.model : info.device;
+      }
+      final host = Platform.localHostname;
+      return host.endsWith('.local')
+          ? host.substring(0, host.length - '.local'.length)
+          : host;
+    } catch (_) {
+      return '';
+    }
+  }
+
   Future<void> updateDns(bool restore) async {
     await macOS?.updateDns(restore);
     await linux?.updateDns(restore);
@@ -91,7 +106,9 @@ class System {
 
   Future<bool> checkIsAdmin() async {
     if (system.isWindows) {
-      if (kDebugMode) return windows?.isUserAnAdmin ?? false;
+      if (!(windows?.usesHelper ?? false)) {
+        return windows?.isUserAnAdmin ?? false;
+      }
       final result = await windows?.checkService();
       return result == WindowsHelperServiceStatus.running;
     }
@@ -119,7 +136,7 @@ class System {
     if (await checkIsAdmin()) return AuthorizeCode.none;
 
     if (system.isWindows) {
-      if (kDebugMode) return AuthorizeCode.error;
+      if (!(windows?.usesHelper ?? false)) return AuthorizeCode.error;
       if (await windows?.isHelperHealthy() ?? false) return AuthorizeCode.none;
       final result = await windows?.registerService();
       return result == true ? AuthorizeCode.success : AuthorizeCode.error;
@@ -456,6 +473,14 @@ class System {
     await window?.close();
   }
 
+  Future<void> restartAsAdmin() async {
+    final executable = Platform.resolvedExecutable.replaceAll("'", "''");
+    final command =
+        '-NoProfile -WindowStyle Hidden -Command "Wait-Process -Id $pid -ErrorAction SilentlyContinue; Start-Process -FilePath \'$executable\'"';
+    if (!(windows?.runas('powershell.exe', command) ?? false)) return;
+    await globalState.appController.handleExit();
+  }
+
   Future<void> restartApp() async {
     if (Platform.isLinux) {
       final appImage = Platform.environment['APPIMAGE'];
@@ -499,6 +524,24 @@ class System {
     if (result.exitCode != 0) {
       throw Exception('Failed to set process priority: ${result.stderr}');
     }
+  }
+
+  void purgeMemory() {
+    if (!isLinux && !isMacOS) return;
+    try {
+      final process = DynamicLibrary.process();
+      if (isLinux) {
+        process
+            .lookupFunction<Int32 Function(UintPtr pad), int Function(int pad)>(
+              'malloc_trim',
+            )(0);
+      } else {
+        process.lookupFunction<
+          UintPtr Function(Pointer<Void> zone, UintPtr goal),
+          int Function(Pointer<Void> zone, int goal)
+        >('malloc_zone_pressure_relief')(nullptr, 0);
+      }
+    } catch (_) {}
   }
 }
 
@@ -578,6 +621,61 @@ class Windows {
       }
     }
   }
+
+  void setBackgroundMemoryPriority(bool background) {
+    try {
+      final kernel32 = DynamicLibrary.open('kernel32.dll');
+      final getCurrentProcess = kernel32
+          .lookupFunction<IntPtr Function(), int Function()>(
+            'GetCurrentProcess',
+          );
+      final setProcessInformation = kernel32
+          .lookupFunction<
+            Int32 Function(
+              IntPtr hProcess,
+              Int32 processInformationClass,
+              Pointer<Void> processInformation,
+              Uint32 processInformationSize,
+            ),
+            int Function(
+              int hProcess,
+              int processInformationClass,
+              Pointer<Void> processInformation,
+              int processInformationSize,
+            )
+          >('SetProcessInformation');
+      final memoryPriorityInfo = calloc<Uint32>();
+      try {
+        memoryPriorityInfo.value = background ? 1 : 5;
+        setProcessInformation(
+          getCurrentProcess(),
+          0,
+          memoryPriorityInfo.cast<Void>(),
+          sizeOf<Uint32>(),
+        );
+      } finally {
+        calloc.free(memoryPriorityInfo);
+      }
+    } catch (_) {}
+  }
+
+  void emptyWorkingSet() {
+    try {
+      final kernel32 = DynamicLibrary.open('kernel32.dll');
+      final getCurrentProcess = kernel32
+          .lookupFunction<IntPtr Function(), int Function()>(
+            'GetCurrentProcess',
+          );
+      final emptyWorkingSet = kernel32
+          .lookupFunction<
+            Int32 Function(IntPtr hProcess),
+            int Function(int hProcess)
+          >('K32EmptyWorkingSet');
+      emptyWorkingSet(getCurrentProcess());
+    } catch (_) {}
+  }
+
+  bool get usesHelper => !kDebugMode && !appPath.isPortable;
 
   bool get isUserAnAdmin {
     final isUserAnAdmin = _shell32
@@ -683,7 +781,7 @@ class Windows {
 
     final command = [
       '/c',
-      'sc',
+      'net',
       'stop',
       appHelperService,
       '>nul',

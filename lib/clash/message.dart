@@ -28,6 +28,14 @@ class ClashMessage {
               url: data['url'] as String? ?? '',
               state: data['state'] as String? ?? '',
             );
+          case AppMessageType.speedTest:
+            listener.onSpeedTest(SpeedTestState.fromJson(m.data));
+          case AppMessageType.stunTest:
+            listener.onStunTest(StunTestState.fromJson(m.data));
+          case AppMessageType.iperf:
+            listener.onIperf(IperfState.fromJson(m.data));
+          case AppMessageType.localPing:
+            listener.onLocalPing(LocalPingState.fromJson(m.data));
         }
       }
     });
