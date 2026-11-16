@@ -72,12 +72,10 @@ dependencies:
   cupertino_ui: ^1.1.2
 dependency_overrides:
   flutter_rust_bridge: 2.13.0
-  # Fix compile failure: https://github.com/leanflutter/hotkey_manager/pull/66
+  # Clang 21 build fix, vendored: https://github.com/leanflutter/hotkey_manager/pull/66
+  # (taken from gepbird/hotkey_manager@1b31e3ca, whose branch was deleted)
   hotkey_manager_linux:
-    git:
-      url: https://github.com/gepbird/hotkey_manager.git
-      path: packages/hotkey_manager_linux
-      ref: fix-build-failure
+    path: plugins/hotkey_manager_linux
 dev_dependencies:
   flutter_test:
     sdk: flutter
