@@ -252,6 +252,21 @@ extension ProfileExtension on Profile {
     return (await file.stat()).modified.microsecondsSinceEpoch;
   }
 
+  /// Whether the stored profile holds a web page (a captive portal or sign-in
+  /// page) instead of a config, which is what an update captures when the
+  /// network asks for a sign-in first.
+  Future<bool> get hasWebPageContent async {
+    try {
+      final file = File(await appPath.getProfilePath(id));
+      if (!await file.exists()) return false;
+      return utf8
+          .decode(await file.readAsBytes(), allowMalformed: true)
+          .isHtmlDocument;
+    } catch (_) {
+      return false;
+    }
+  }
+
   Future<Profile> update({bool validate = true}) async {
     final response = await request.getFileResponseForUrl(url);
     final disposition = response.headers['content-disposition']?.firstOrNull;
@@ -263,6 +278,13 @@ extension ProfileExtension on Profile {
   }
 
   Future<Profile> saveFile(Uint8List bytes, {bool validate = true}) async {
+    // A subscription can answer with an HTML page (a captive portal or sign-in
+    // page) instead of a config. Saving it would overwrite the last good
+    // profile and break the core with a raw YAML error, so reject it even when
+    // the caller skips validation.
+    if (utf8.decode(bytes, allowMalformed: true).isHtmlDocument) {
+      throw const ProfileContentNotConfigException();
+    }
     String content = utf8.decode(bytes);
     final key = ageSecretKey;
     if (key != null && key.isNotEmpty) {
@@ -306,6 +328,9 @@ extension ProfileExtension on Profile {
   }
 
   Future<Profile> saveFileWithString(String value) async {
+    if (value.isHtmlDocument) {
+      throw const ProfileContentNotConfigException();
+    }
     String content = value;
     final key = ageSecretKey;
     if (key != null && key.isNotEmpty) {

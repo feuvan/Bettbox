@@ -1290,6 +1290,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileParseErrorDesc": MessageLookupByLibrary.simpleMessage(
       "프로필 구문 분석 오류",
     ),
+    "profileContentNotConfig": MessageLookupByLibrary.simpleMessage(
+      "구독이 구성 파일 대신 웹 페이지(네트워크 인증 페이지 등)를 반환했습니다. 인증을 완료한 후 다시 업데이트하세요.",
+    ),
     "profileUrlInvalidValidationDesc": MessageLookupByLibrary.simpleMessage(
       "유효한 URL을 입력하세요",
     ),

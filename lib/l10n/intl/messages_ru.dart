@@ -1603,6 +1603,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileParseErrorDesc": MessageLookupByLibrary.simpleMessage(
       "Ошибка чтения профиля",
     ),
+    "profileContentNotConfig": MessageLookupByLibrary.simpleMessage(
+      "Подписка вернула веб-страницу вместо файла конфигурации (возможно, страницу авторизации в сети). Пройдите авторизацию и обновите подписку снова.",
+    ),
     "profileUrlInvalidValidationDesc": MessageLookupByLibrary.simpleMessage(
       "Введите корректный URL профиля",
     ),

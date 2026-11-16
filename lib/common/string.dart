@@ -67,6 +67,19 @@ extension StringExtension on String {
     return endsWith('.svg');
   }
 
+  /// Whether this looks like an HTML document, such as the sign-in page a
+  /// captive portal returns instead of the subscription's config.
+  bool get isHtmlDocument {
+    final sample = length > 4096 ? substring(0, 4096) : this;
+    final head = (sample.startsWith('\uFEFF') ? sample.substring(1) : sample)
+        .trimLeft()
+        .toLowerCase();
+    if (head.startsWith('<!doctype html') || head.startsWith('<html')) {
+      return true;
+    }
+    return head.contains('</html>') || head.contains('</body>');
+  }
+
   bool get isRegex {
     try {
       RegExp(this);
@@ -89,6 +102,17 @@ extension StringExtensionSafe on String? {
   }
 }
 
+/// Thrown when a subscription returns a web page (a captive portal or sign-in
+/// page) instead of a configuration file.
+class ProfileContentNotConfigException implements Exception {
+  const ProfileContentNotConfigException();
+
+  @override
+  String toString() => 'Profile content is a web page, not a config file';
+}
+
+final _yamlParseErrorRegExp = RegExp(r'yaml: line \d+:');
+
 extension ObjectExtension on Object {
   String get formatError => _format(isLog: false);
 
@@ -96,6 +120,14 @@ extension ObjectExtension on Object {
 
   String _format({required bool isLog}) {
     final errorStr = toString();
+    if (this is ProfileContentNotConfigException) {
+      return isLog ? errorStr : appLocalizations.profileContentNotConfig;
+    }
+    if (_yamlParseErrorRegExp.hasMatch(errorStr)) {
+      return isLog
+          ? errorStr
+          : '${appLocalizations.profileParseErrorDesc}: $errorStr';
+    }
     if (errorStr.contains('DioException [bad response]') ||
         errorStr.contains('status code of')) {
       final match = RegExp(r'status code of (\d+)').firstMatch(errorStr);

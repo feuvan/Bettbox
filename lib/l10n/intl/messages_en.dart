@@ -1549,6 +1549,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileParseErrorDesc": MessageLookupByLibrary.simpleMessage(
       "Profile parse error",
     ),
+    "profileContentNotConfig": MessageLookupByLibrary.simpleMessage(
+      "The subscription returned a web page instead of a config file, likely a network sign-in page. Complete the sign-in, then update again.",
+    ),
     "profileUrlInvalidValidationDesc": MessageLookupByLibrary.simpleMessage(
       "Please enter a valid URL",
     ),

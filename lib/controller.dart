@@ -396,6 +396,9 @@ class AppController {
     final message = result.message;
     if (message.isNotEmpty) {
       commonPrint.error('[Core] Setup config failed: $message');
+      if (await currentProfile.hasWebPageContent) {
+        throw const ProfileContentNotConfigException();
+      }
       throw message;
     }
     if (params.resetTailscaleDirs.isNotEmpty) {
@@ -773,7 +776,7 @@ class AppController {
         try {
           await _applyProfile();
         } catch (err) {
-          globalState.showNotifier(err.toString());
+          globalState.showNotifier(err.formatError);
           rethrow;
         }
       } else {
@@ -810,7 +813,7 @@ class AppController {
           try {
             await _applyProfile();
           } catch (_) {}
-          globalState.showNotifier(err.toString());
+          globalState.showNotifier(err.formatError);
         }
       }
       _ref.read(logsProvider.notifier).value = FixedList(maxLogLength);

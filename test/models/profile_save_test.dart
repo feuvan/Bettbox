@@ -38,4 +38,20 @@ void main() {
     expect(await file.lastModified(), isNot(stamp));
     expect(await file.readAsString(), 'proxies: []\nrules: []\n');
   });
+
+  test('a web page response keeps the previous profile', () async {
+    const profile = Profile(id: 'html', autoUpdateDuration: Duration(hours: 1));
+    final file = File(await appPath.getProfilePath(profile.id));
+
+    await profile.saveFile(utf8.encode('proxies: []\n'), validate: false);
+    await expectLater(
+      profile.saveFile(
+        utf8.encode('<!doctype html><html><body>会员上网服务</body></html>'),
+        validate: false,
+      ),
+      throwsA(isA<ProfileContentNotConfigException>()),
+    );
+
+    expect(await file.readAsString(), 'proxies: []\n');
+  });
 }
